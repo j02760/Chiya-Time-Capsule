@@ -11,23 +11,23 @@
 # Site Basic Information
 # =============================================================================
 site:
-  title: 余弦の博客 # 网站名称
-  alternate: cosine # 网站英文名称 用于页脚、Logo、@ handle 等
-  subtitle: WA 的一声就哭了 # 网站副标题
-  name: cos # 作者名称 - 请修改为你的名字
-  description: 一个基于 Astro 的现代化博客主题 # 网站描述
-  avatar: /img/avatar.webp # 网站头像
-  showLogo: true # 是否显示 Logo
-  author: Author # 作者名称 - 请修改为你的名字
-  url: https://koharu.cosine.ren # 站点 URL 用于 RSS 和 SEO
-  defaultOgImage: /img/avatar.webp # 默认 Open Graph 图片
-  startYear: 2024 # 建站年份
-  timezone: Asia/Shanghai # 时区配置 (IANA 格式)，用于日期显示和处理
-  keywords: # SEO 关键词 (全局)
-    - 博客
-    - Astro
-    - 技术
-    - 前端
+  title: 甘兔の博客 # 網站名稱
+  alternate: chiya # 網站英文名稱 用於頁腳、Logo、@ handle 等
+  subtitle: 是什麼地方呢~ # 網站副標題
+  name: 白色毛球 # 作者名稱 - 請修改為你的名字
+  description: 一個基於 Astro 的現代化博客主題 # 網站描述
+  avatar: /img/avatar.jpg # 網站頭像
+  showLogo: true # 是否顯示 Logo
+  author: 白色毛球 # 作者名稱 - 請修改為你的名字
+  url: https://koharu.cosine.ren # 站點 URL 用於 RSS 和 SEO
+  defaultOgImage: /img/avatar.jpg # 預設 Open Graph 圖片
+  startYear: 2026 # 建站年份
+  timezone: Asia/Shanghai # 時區配置 (IANA 格式)，用於日期顯示和處理
+  keywords: # SEO 關鍵字 (全局)
+  #  - 博客
+  #  - Astro
+  #  - 技术
+  #  - 前端
     # 请根据你的网站内容添加关键词
   # breadcrumbHome: 首页  # 面包屑导航中首页的显示名称（默认: '首页'）
   # icp:                         # ICP 备案号（可自定义链接）
@@ -39,7 +39,7 @@ site:
 
 # =============================================================================
 # Internationalization (i18n)
-# 国际化配置 - 控制多语言支持
+# 國際化配置 - 控制多語言支援
 # =============================================================================
 # defaultLocale: 默认语言代码（URL 不带前缀）
 # locales: 支持的语言列表
@@ -47,16 +47,17 @@ site:
 #   - label: 语言显示名称（如 '中文', 'English'）
 # -----------------------------------------------------------------------------
 i18n:
-  defaultLocale: zh
+  defaultLocale: zh_TW
   locales:
-    - code: zh
-      label: 中文
+      - code: zh
+        label: 中文
     - code: en
       label: English
       # enabled: false  # 内容存在但暂时禁用（保留内容但不生成路由）
     - code: ja
       label: 日本語
-
+    - code: zh_TW
+      label: 繁體中文
 # =============================================================================
 # Category Map
 # Maps Chinese category names to URL-friendly English slugs
@@ -64,10 +65,10 @@ i18n:
 # =============================================================================
 categoryMap:
   # Primary categories
-  随笔: life
-  笔记: note
+  隨筆: life
+  筆記: note
   工具: tools
-  周刊: weekly
+  週刊: weekly
   # Secondary categories (for nested paths)
   前端: front-end
   # Add more as needed:
@@ -78,7 +79,7 @@ categoryMap:
 
 # =============================================================================
 # Featured Categories (Homepage)
-# 首页精选分类 - 在首页以卡片形式展示的分类入口
+# 首頁精選分類 - 在首頁以卡片形式展示的分類入口
 # =============================================================================
 # 字段说明：
 #   link: 分类链接路径，对应 categoryMap 中的英文 slug
@@ -87,26 +88,26 @@ categoryMap:
 #   description: 分类描述文字，显示在卡片上
 # -----------------------------------------------------------------------------
 featuredCategories:
-  - link: life # 对应 categoryMap 中 随笔: life
-    label: 随笔
+  - link: life # 對應 categoryMap 中 隨筆: life
+    label: 隨筆
     image: /img/cover/2.webp
-    description: 生活记录、随想随笔
-  - link: note # 对应 categoryMap 中 笔记: note
-    label: 笔记
+    description: 生活記錄、隨想隨筆
+  - link: note # 對應 categoryMap 中 筆記: note
+    label: 筆記
     image: /img/cover/4.webp
-    description: 技术笔记、学习笔记
-  - link: note/front-end # 嵌套分类：笔记/前端
+    description: 技術筆記、學習筆記
+  - link: note/front-end # 嵌套分類：筆記/前端
     label: 前端
     image: /img/cover/1.webp
-    description: 前端技术相关
-  - link: tools # 对应 categoryMap 中 工具: tools
+    description: 前端技術相關
+  - link: tools # 對應 categoryMap 中 工具: tools
     label: 工具
     image: /img/cover/11.webp
     description: 工具使用、效率提升
 
 # =============================================================================
 # Featured Series
-# 精选系列功能 - 用于展示定期更新的系列内容（支持多个系列）
+# 精選系列功能 - 用於展示定期更新的系列內容（支援多個系列）
 # =============================================================================
 # 字段说明：
 #   slug: URL 路径（必填），如 'weekly' 对应 /weekly 路径
@@ -126,13 +127,13 @@ featuredSeries:
     categoryName: 周刊 # 必须与 categoryMap 中的分类名匹配
     label: 我的周刊 # 简短名称
     fullName: 我的技术周刊 # 完整名称
-    description: | # 支持多行 Markdown
-      这是周刊/系列文章功能的示例配置。
-      你可以用它来发布定期更新的系列内容，如技术周刊、读书笔记系列等。
-      设置 enabled: false 可以关闭此功能。
-    cover: /img/weekly_header.webp # 系列页面头图
-    enabled: true # 启用此系列
-    icon: ri:newspaper-line # 导航图标
+    description: | # 支援多行 Markdown
+      這是週刊/系列文章功能的示例配置。
+      你可以用它來發布定期更新的系列內容，如技術週刊、讀書筆記系列等。
+      設定 enabled: false 可關閉此功能。
+    cover: /img/weekly_header.webp # 系列頁面頭圖
+    enabled: true # 啟用此系列
+    icon: ri:newspaper-line # 導航圖標
     links: # 相关链接（可选）
       github: https://github.com/your-username/your-repo # (可选) GitHub 仓库
       rss: /rss.xml # (可选) RSS 订阅链接
@@ -150,7 +151,7 @@ featuredSeries:
 
 # =============================================================================
 # Social Links
-# 社交链接 - 显示在页脚和个人信息区域
+# 社交連結 - 顯示在頁腳和個人資訊區域
 # =============================================================================
 # 字段说明：
 #   url: 链接地址（邮箱需加 mailto: 前缀）
@@ -162,11 +163,11 @@ featuredSeries:
 # -----------------------------------------------------------------------------
 social:
   github:
-    url: https://github.com/your-username # 替换为你的 GitHub 链接
-    icon: ri:github-fill # Remix Icon 的 GitHub 图标
-    color: '#191717' # (可选) 图标颜色
+    url: https://github.com/j02760 # 替換為你的 GitHub 連結
+    icon: ri:github-fill # Remix Icon 的 GitHub 圖標
+    color: '#191717' # (可選) 圖標顏色
   email:
-    url: mailto:your@email.com # 替换为你的邮箱，需加 mailto: 前缀
+    url: mailto:ws9830406@gmail.com # 替换为你的邮箱，需加 mailto: 前缀
     icon: ri:mail-line
     color: '#55acd5'
   rss:
@@ -188,14 +189,14 @@ social:
   #   url: https://www.zhihu.com/people/your-id
   #   icon: ri:zhihu-fill
   #   color: '#1e88e5'
-  # music:
-  #   url: https://music.163.com/#/user/home?id=your-id
-  #   icon: ri:netease-cloud-music-line
-  #   color: '#e60026'
+  music:
+    url: https://music.163.com/#/user/home?id=548456882
+    icon: ri:netease-cloud-music-line
+    color: '#e60026'
 
 # =============================================================================
 # Friends Links
-# 友情链接页面配置 - 展示友链列表和申请说明
+# 友鏈頁面配置 - 展示友鏈列表和申請說明
 # =============================================================================
 # intro: 页面介绍文字配置
 #   title: 页面标题
@@ -213,22 +214,22 @@ social:
 # -----------------------------------------------------------------------------
 friends:
   intro:
-    title: 友情链接 # 页面标题
-    subtitle: 欢迎交换友链！ # 页面副标题
-    applyTitle: 申请友链 # 申请区块标题
-    applyDesc: 请在本页留言，格式如下 # 申请说明
-    exampleYaml: | # 申请格式示例，会显示在页面上
-      - site: 你的博客名称 # 站点名称
-        url: https://your-blog.com/ # 站点网址
-        owner: 你的昵称 # 昵称
-        desc: 站点简介 # 站点简介
-        image: https://your-blog.com/avatar.jpg # 头像链接
-        color: "#ffc0cb" # 主题色（可选）
+    title: 友鏈 # 頁面標題
+    subtitle: 歡迎交換友鏈！ # 頁面副標題
+    applyTitle: 申請友鏈 # 申請區塊標題
+    applyDesc: 請在本頁留言，格式如下 # 申請說明
+    exampleYaml: | # 申請格式示例，會顯示在頁面上
+      - site: 你的博客名稱 # 站點名稱
+        url: https://your-blog.com/ # 站點網址
+        owner: 你的暱稱 # 暱稱
+        desc: 站點簡介 # 站點簡介
+        image: https://your-blog.com/avatar.jpg # 頭像連結
+        color: "#ffc0cb" # 主題色（可選）
   data: # 友链列表
     - site: 余弦の博客
       url: https://blog.cosine.ren
       owner: cos
-      desc: FE / ACG / 手工 / 深色模式强迫症 / INFP / 兴趣广泛养两只猫的老宅女 / remote
+      desc: FE / ACG / 手工 / 深色模式強迫症 / INFP / 興趣廣泛養兩隻貓的老宅女 / remote
       image: https://blog.cosine.ren/img/avatar.webp
       color: '#ed788b'
     - site: 示例博客 A
@@ -252,7 +253,7 @@ friends:
 
 # =============================================================================
 # Announcements
-# 公告系统 - 在页面顶部显示重要通知
+# 公告系統 - 在頁面頂部顯示重要通知
 # =============================================================================
 # 字段说明：
 #   id: 唯一标识符，用于记录用户已读状态（localStorage）
@@ -302,7 +303,7 @@ announcements:
 
 # =============================================================================
 # Default Cover List
-# 默认封面列表 - 文章没有指定封面时将随机从列表中选择一张作为封面
+# 預設封面列表 - 文章沒有指定封面時將隨機從列表中選擇一張作為封面
 # 不设置则使用内置的 21 张默认封面 (/img/cover/1~21.webp)
 # =============================================================================
 # defaultCoverList:
@@ -312,7 +313,7 @@ announcements:
 
 # =============================================================================
 # Content Processing Options
-# 内容处理选项 - 控制文章渲染和交互行为
+# 內容處理選項 - 控制文章渲染和互動行為
 # =============================================================================
 # 字段说明：
 #   addBlankTarget: 外部链接在新窗口打开
@@ -329,19 +330,19 @@ announcements:
 #   postCardImagePosition: 文章卡片封面图位置 (alternating/left/right)
 # -----------------------------------------------------------------------------
 content:
-  addBlankTarget: true # 外部链接新窗口打开
-  smoothScroll: true # 平滑滚动
-  addHeadingLevel: true # 标题锚点
-  enhanceCodeBlock: true # 增强代码块
-  enableCodeCopy: true # 代码复制按钮
-  enableCodeFullscreen: true # 代码全屏按钮
-  enableLinkEmbed: true # 链接卡片预览
+  addBlankTarget: true # 外部連結新視窗開啟
+  smoothScroll: true # 平滑捲動
+  addHeadingLevel: true # 標題錨點
+  enhanceCodeBlock: true # 增強程式碼區塊
+  enableCodeCopy: true # 程式碼複製按鈕
+  enableCodeFullscreen: true # 程式碼全螢幕按鈕
+  enableLinkEmbed: true # 連結卡片預覽
   enableCodePenEmbed: true # CodePen 嵌入
   enableTweetEmbed: true # 推文嵌入
-  enableOGPreview: true # OG 预览卡片
-  previewCacheTime: 30 # 预览缓存时间(天)
-  lazyLoadEmbeds: true # 延迟加载嵌入
-  postCardImagePosition: alternating # 文章卡片封面图位置在首页的显示控制 alternating 默认交替显示 left 封面图始终在左侧 right 封面图始终在右侧
+  enableOGPreview: true # OG 預覽卡片
+  previewCacheTime: 30 # 預覽快取時間(天)
+  lazyLoadEmbeds: true # 延遲載入嵌入內容
+  postCardImagePosition: alternating # 文章卡片封面圖位置在首頁的顯示控制 alternating 預設交替顯示 left 封面圖始終在左側 right 封面圖始終在右側
   # Shoka 兼容功能（默认全部启用，设为 false 可关闭）
   enableShokaContainers: true   # :::提醒块 ;;;标签卡 +++折叠块
   enableShokaAttrs: true        # [text]{.class} 属性语法
@@ -360,9 +361,9 @@ content:
 # =============================================================================
 moments:
   enabled: false
-  path: moments # 支持嵌套路径，例如 life/moments；不要添加首尾斜线
+  path: moments # 支援嵌套路徑，例如 life/moments；不要添加首尾斜線
   title: 碎碎念
-  description: 记录频道中的日常消息
+  description: 記錄頻道中的日常訊息
   # ogImage: /img/moments-og.png
   # pathAliases:
   #   - telegram
@@ -391,24 +392,24 @@ moments:
 #   - Remix Icon: https://icon-sets.iconify.design/ri/
 # -----------------------------------------------------------------------------
 navigation:
-  - name: 首页 # 菜单显示名称（nameKey 不存在时的回退文本）
-    nameKey: nav.home # i18n 翻译 key
+  - name: 首頁 # 選單顯示名稱（nameKey 不存在時的回退文本）
+    nameKey: nav.home # i18n 翻譯 key
     path: / # 链接路径
     icon: ri:home-heart-fill # 图标
   # - name: 书摘
   #   path: /reading
-  - name: 周刊
+  - name: 週刊
     nameKey: nav.weekly
     path: /weekly
     icon: ri:newspaper-line
   # Optional explicit Moments position. When omitted, enabled Moments is inserted after Archives.
   # - feature: moments
   #   icon: ri:chat-smile-3-fill
-  - name: 文章 # 有子菜单时，path 可省略
+  - name: 文章 # 有子選單時，path 可省略
     nameKey: nav.posts
     icon: ri:quill-pen-ai-fill
     children: # 子菜单列表
-      - name: 分类
+      - name: 分類
         nameKey: nav.categories
         path: /categories
         icon: ri:grid-fill
@@ -517,7 +518,7 @@ navigation:
     # path: # 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
     # lang: # 语言 (默认: 'zh-CN')
 comment:
-  provider: none  # 'remark42' | 'giscus' | 'waline' | 'twikoo' | 'none'
+  provider: giscus  # 'remark42' | 'giscus' | 'waline' | 'twikoo' | 'none'
   # remark42:
   #   host: https://comment.example.com/
   #   siteId: your-site-id
@@ -569,11 +570,18 @@ comment:
   #   # turnstileKey: ''               # Cloudflare Turnstile Key (可选)
   #   # locale:                        # 自定义语言显示 (可选)
   #   #   placeholder: '请留言...'      # 自定义输入框占位文本
-  twikoo:
-    envId: https://your-twikoo.vercel.app  # Twikoo 环境 ID (腾讯云) 或 Vercel 环境地址 (必填)
-    # region: ap-shanghai              # 环境地域，默认为 ap-shanghai
-    # path: location.pathname          # 用于区分不同文章的自定义 js 路径
-    # lang: zh-CN                     # 语言 (默认: 'zh-CN')
+  giscus:
+    repo: your-username/your-repo  # GitHub 仓库名称
+    repoId: your-repo-id           # GitHub 仓库 ID
+    categoryId: your-category-id   # GitHub 讨论分类 ID
+    mapping: pathname              # 映射方式 (默认: 'pathname')
+    term: 'your-term'              # 讨论标题 (默认: 'your-term')
+    strict: false                  # 严格模式 (默认: false)
+    reactionsEnabled: true         # 启用反应功能 (默认: true)
+    emitMetadata: false            # 发送元数据 (默认: false)
+    inputPosition: bottom           # 输入框位置 (默认: 'bottom')
+    theme: light                   # 主题 (默认: 'light')
+    lang: zh-TW                     # 语言 (默认: 'zh-CN')
 
 # =============================================================================
 # Analytics (Umami)
@@ -612,7 +620,7 @@ seo:
     # policy:                          # 爬虫策略（可选，取消注释并配置）
     #   - userAgent: '*'
     #     allow: '/'
-    #     disallow:
+        disallow: '*'
     #       - '/api/'
     # host: true                       # 可选：添加 Host 指令（Yandex）
 
@@ -623,12 +631,12 @@ bgm:
   enabled: true  # (有 audio 时自动启用，显式 false 可禁用)
   # metingApi: https://163.hyc.moe/  # Meting API 地址，默认为 https://163.hyc.moe/，推荐自部署
   audio:
-    - title: 最爱山山
+    - title: 我的歌單
       list:
-        - https://music.163.com/playlist?id=8676645748
-    - title: Love Vocaloid
-      list:
-        - https://music.163.com/playlist?id=8882890045
+        - https://music.163.com/playlist?id=821738734
+    # - title: Love Vocaloid
+    #   list:
+    #     - https://music.163.com/playlist?id=8882890045
 
 christmas:
   enabled: false # 总开关
@@ -657,9 +665,9 @@ christmas:
 #   icon: 导航图标，Iconify 格式（可选，默认：ri:bilibili-fill）
 # -----------------------------------------------------------------------------
 bangumi:
-  userId: cosine
-  # label: 追番
-  # icon: ri:bilibili-fill
+  userId: 741693
+  label: 追番
+  icon: ri:bilibili-fill
 
 # =============================================================================
 # Development Tools (Dev Only)
