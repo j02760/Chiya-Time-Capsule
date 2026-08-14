@@ -17,7 +17,7 @@ site:
   name: 白色毛球 # 作者名稱 - 請修改為你的名字
   description: 放置個人日常瑣事的地方 # 網站描述
   avatar: /img/avatar.jpg # 網站頭像
-  showLogo: true # 是否顯示 Logo
+  showLogo: false # 是否顯示 Logo
   author: 白色毛球 # 作者名稱 - 請修改為你的名字
   url: https://chiya-koharu.vercel.app # 站點 URL 用於 RSS 和 SEO
   defaultOgImage: /img/avatar.jpg # 預設 Open Graph 圖片

@@ -8,17 +8,26 @@ description: "關於我?"
 
 ## 你好，這裡是甘兔
 ## 也可以叫我三餐吃瑞士捲
-資通電軍出身，對編程僅有一點了解
+資通電軍出身，對編程稍有一點了解
 
-[![github badge](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)](https://github.com/j02760)
-&nbsp;
-[![github badge](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)](https://github.com/j02760)
-&nbsp;
-[![github badge](https://img.shields.io/badge/python-%233670A0.svg?style=for-the-badge&logo=python&logoColor=ffdd54)](https://github.com/j02760)
-&nbsp;
-[![github badge](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/j02760)
-&nbsp;
-[![github badge](https://img.shields.io/badge/opencv-%23fff.svg?style=for-the-badge&logo=opencv&logoColor=black)](https://github.com/j02760)
+
+<div class="flex flex-nowrap items-center gap-2 whitespace-nowrap overflow-x-auto">
+  <a href="https://github.com/j02760" class="inline-block">
+    <img src="https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white" alt="unity badge" />
+  </a>
+  <a href="https://github.com/j02760" class="inline-block">
+    <img src="https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white" alt="c badge" />
+  </a>
+  <a href="https://github.com/j02760" class="inline-block">
+    <img src="https://img.shields.io/badge/python-%233670A0.svg?style=for-the-badge&logo=python&logoColor=ffdd54" alt="python badge" />
+  </a>
+  <a href="https://github.com/j02760" class="inline-block">
+    <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="docker badge" />
+  </a>
+  <a href="https://github.com/j02760" class="inline-block">
+    <img src="https://img.shields.io/badge/opencv-%23fff.svg?style=for-the-badge&logo=opencv&logoColor=black" alt="opencv badge" />
+  </a>
+</div>
 
 
 
@@ -29,6 +38,7 @@ description: "關於我?"
 > 噠噠噠噠噠 \
 > 好想玩原神 \
 > 雲原神!
+
 
 ### 找到我
 
