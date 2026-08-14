@@ -11,15 +11,15 @@
 # Site Basic Information
 # =============================================================================
 site:
-  title: 甘兔の博客 # 網站名稱
+  title: 甘兔の桌面 # 網站名稱
   alternate: chiya # 網站英文名稱 用於頁腳、Logo、@ handle 等
   subtitle: 是什麼地方呢~ # 網站副標題
   name: 白色毛球 # 作者名稱 - 請修改為你的名字
-  description: 一個基於 Astro 的現代化博客主題 # 網站描述
+  description: 放置個人日常瑣事的地方 # 網站描述
   avatar: /img/avatar.jpg # 網站頭像
   showLogo: true # 是否顯示 Logo
   author: 白色毛球 # 作者名稱 - 請修改為你的名字
-  url: https://koharu.cosine.ren # 站點 URL 用於 RSS 和 SEO
+  url: https://chiya-koharu.vercel.app # 站點 URL 用於 RSS 和 SEO
   defaultOgImage: /img/avatar.jpg # 預設 Open Graph 圖片
   startYear: 2026 # 建站年份
   timezone: Asia/Shanghai # 時區配置 (IANA 格式)，用於日期顯示和處理
@@ -413,23 +413,23 @@ navigation:
         nameKey: nav.categories
         path: /categories
         icon: ri:grid-fill
-      - name: 标签
+      - name: 標籤
         nameKey: nav.tags
         path: /tags
         icon: fa6-solid:tags
-      - name: 归档
+      - name: 歸檔
         nameKey: nav.archives
         path: /archives
         icon: ri:archive-2-fill
-  - name: 友链
+  - name: 友鏈
     nameKey: nav.friends
     path: /friends
     icon: ri:links-line
-  - name: 关于
+  - name: 關於
     nameKey: nav.about
     path: /about
     icon: fa6-regular:circle-user
-  - name: 歌单
+  - name: 歌單
     nameKey: nav.music
     path: /music
     icon: ri:music-2-fill
@@ -597,12 +597,12 @@ comment:
 analytics:
   umami:
     enabled: true
-    id: your-umami-id
+    id: chiya-koharu
     endpoint: https://stats.example.com
-    # statistics_display:
-    #   token: your-umami-share-token
-    #   article_page_views: true
-    #   footer_site_stats: true
+    statistics_display:
+      token: r0SIqQVHvZf6rPMQ
+      article_page_views: true
+      footer_site_stats: true
 
 # =============================================================================
 # SEO Configuration
@@ -631,8 +631,9 @@ bgm:
   enabled: true  # (有 audio 时自动启用，显式 false 可禁用)
   metingApi: https://163.hyc.moe/  # Meting API 地址，默认为 https://163.hyc.moe/，推荐自部署
   audio:
-    - name: 她的夢
-      url: https://music.163.com/#/song?id=1878868202
+    - title: 她的夢
+      list:
+        - https://music.163.com/#/album?id=133367427
     # - title: 我的歌單
     #   list:
     #     - https://music.163.com/playlist?id=821738734
