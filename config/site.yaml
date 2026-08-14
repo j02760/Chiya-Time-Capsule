@@ -68,7 +68,7 @@ categoryMap:
   隨筆: life
   筆記: note
   工具: tools
-  週刊: weekly
+  # 週刊: weekly
   # Secondary categories (for nested paths)
   前端: front-end
   # Add more as needed:
@@ -124,15 +124,15 @@ featuredCategories:
 # -----------------------------------------------------------------------------
 featuredSeries:
   - slug: weekly # URL 路径: /weekly
-    categoryName: 周刊 # 必须与 categoryMap 中的分类名匹配
-    label: 我的周刊 # 简短名称
-    fullName: 我的技术周刊 # 完整名称
+    categoryName: 週刊 # 必须与 categoryMap 中的分类名匹配
+    label: 我的週刊 # 简短名称
+    fullName: 我的技术週刊 # 完整名称
     description: | # 支援多行 Markdown
       這是週刊/系列文章功能的示例配置。
       你可以用它來發布定期更新的系列內容，如技術週刊、讀書筆記系列等。
       設定 enabled: false 可關閉此功能。
     cover: /img/weekly_header.webp # 系列頁面頭圖
-    enabled: true # 啟用此系列
+    enabled: false # 啟用此系列
     icon: ri:newspaper-line # 導航圖標
     links: # 相关链接（可选）
       github: https://github.com/your-username/your-repo # (可选) GitHub 仓库
@@ -226,30 +226,30 @@ friends:
         image: https://your-blog.com/avatar.jpg # 頭像連結
         color: "#ffc0cb" # 主題色（可選）
   data: # 友链列表
-    - site: 余弦の博客
-      url: https://blog.cosine.ren
-      owner: cos
-      desc: FE / ACG / 手工 / 深色模式強迫症 / INFP / 興趣廣泛養兩隻貓的老宅女 / remote
-      image: https://blog.cosine.ren/img/avatar.webp
-      color: '#ed788b'
-    - site: 示例博客 A
-      url: https://example-a.com
-      owner: Alice
-      desc: 一个热爱技术的开发者
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Alice
-      color: '#BEDCFF'
-    - site: 示例博客 B
-      url: https://example-b.com
-      owner: Bob
-      desc: 分享生活与技术的小站
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Bob
-      color: '#FBC1CC'
-    - site: 示例博客 C
-      url: https://example-c.com
-      owner: Carol
-      desc: 记录学习与成长的地方
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Carol
-      color: '#ABDCFF'
+    # - site: 余弦の博客
+    #   url: https://blog.cosine.ren
+    #   owner: cos
+    #   desc: FE / ACG / 手工 / 深色模式強迫症 / INFP / 興趣廣泛養兩隻貓的老宅女 / remote
+    #   image: https://blog.cosine.ren/img/avatar.webp
+    #   color: '#ed788b'
+    # - site: 示例博客 A
+    #   url: https://example-a.com
+    #   owner: Alice
+    #   desc: 一个热爱技术的开发者
+    #   image: https://api.dicebear.com/7.x/avataaars/svg?seed=Alice
+    #   color: '#BEDCFF'
+    # - site: 示例博客 B
+    #   url: https://example-b.com
+    #   owner: Bob
+    #   desc: 分享生活与技术的小站
+    #   image: https://api.dicebear.com/7.x/avataaars/svg?seed=Bob
+    #   color: '#FBC1CC'
+    # - site: 示例博客 C
+    #   url: https://example-c.com
+    #   owner: Carol
+    #   desc: 记录学习与成长的地方
+    #   image: https://api.dicebear.com/7.x/avataaars/svg?seed=Carol
+    #   color: '#ABDCFF'
 
 # =============================================================================
 # Announcements
@@ -398,10 +398,10 @@ navigation:
     icon: ri:home-heart-fill # 图标
   # - name: 书摘
   #   path: /reading
-  - name: 週刊
-    nameKey: nav.weekly
-    path: /weekly
-    icon: ri:newspaper-line
+  # - name: 週刊
+  #   nameKey: nav.weekly
+  #   path: /weekly
+  #   icon: ri:newspaper-line
   # Optional explicit Moments position. When omitted, enabled Moments is inserted after Archives.
   # - feature: moments
   #   icon: ri:chat-smile-3-fill
@@ -629,14 +629,13 @@ seo:
 # =============================================================================
 bgm:
   enabled: true  # (有 audio 时自动启用，显式 false 可禁用)
-  # metingApi: https://163.hyc.moe/  # Meting API 地址，默认为 https://163.hyc.moe/，推荐自部署
+  metingApi: https://163.hyc.moe/  # Meting API 地址，默认为 https://163.hyc.moe/，推荐自部署
   audio:
-    - title: 我的歌單
-      list:
-        - https://music.163.com/playlist?id=821738734
-    # - title: Love Vocaloid
+    - name: 她的夢
+      url: https://music.163.com/#/song?id=1878868202
+    # - title: 我的歌單
     #   list:
-    #     - https://music.163.com/playlist?id=8882890045
+    #     - https://music.163.com/playlist?id=821738734
 
 christmas:
   enabled: false # 总开关

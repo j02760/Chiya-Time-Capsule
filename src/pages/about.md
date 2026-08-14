@@ -1,16 +1,20 @@
 ---
 layout: ../layouts/PageLayout.astro
 title: "About"
-coverTitle: "关于我"
-date: 2025-01-03 01:01:33
-description: "关于我？"
+coverTitle: "關於我"
+date: 2026-08-14 12:42:54
+description: "關於我?"
 ---
 
-## 你好，这里是余弦
+## 你好，這裡是甘兔
 
-[![github badge](https://img.shields.io/badge/dynamic/json?color=blue&label=Github&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3Dyusixian)](https://github.com/yusixian)
+[![github badge](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)](https://github.com/j02760)
+[![github badge](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)](https://github.com/j02760)
+[![github badge](https://img.shields.io/badge/python-%233670A0.svg?style=for-the-badge&logo=python&logoColor=ffdd54)](https://github.com/j02760)
+[![github badge](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/j02760)
+[![github badge](https://img.shields.io/badge/opencv-%23fff.svg?style=for-the-badge&logo=opencv&logoColor=black)](https://github.com/j02760)
 
-cosine = 余弦 = cos
+
 
 愿热情永存，愿热爱不灭，愿生活无憾
 
