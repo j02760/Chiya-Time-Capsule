@@ -8,9 +8,8 @@ description: "關於我?"
 
 ## 你好，這裡是甘兔
 ## 也可以叫我三餐吃瑞士捲
-資通電軍出身，對編程稍有一點了解
+資通電軍出身，對編程稍有一點了解<br><br>
 
-\ \
 <div class="flex flex-nowrap items-center gap-2 whitespace-nowrap overflow-x-auto">
   <a href="https://github.com/j02760" class="inline-block">
     <img src="https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white" alt="unity badge" />
@@ -29,16 +28,16 @@ description: "關於我?"
   </a>
 </div>
 
-\ \
+<br><br>
 人生的容錯率其實比想像中的大 \
-若不能這麼說服自己，至今經歷的一切都沒有意義 \
+若不能這麼說服自己，至今經歷的一切都沒有意義<br>
 
 > 诶雲朵 \
 > 噠噠噠噠噠 \
 > 好想玩原神 \
 > 雲原神!
 
-\ \
+<br><br>
 ### 找到我
 
 <!-- 个人 Telegram 前端频道：日常碎碎念，偶尔掉落优质前端博文推荐、学习资源等
@@ -48,14 +47,12 @@ https://t.me/cosine_front_end
 Gitbook 前端学习记录
 
 https://book.cosine.ren/ -->
-\ \
+<br><br>
 個人 Tube 站點：一些魔性洗腦的影片會丟進來，使用 docker 本地化部屬
 
 https://chiya-tube.mythachivechiyasv.dpdns.org/
 
 
 [![Anurag's GitHub stats](https://github-stats-extended.vercel.app/api?username=j02760&rank_icon=github&custom_title=Github%20Stats&show_icons=true&include_all_commits=true&theme=dark)](https://github.com/stats-organization/github-stats-extended)
-
 [![GitHub Stats](https://github-stats-extended.vercel.app/api/top-langs?username=j02760&langs_count=6&theme=tokyonight)](https://github-stats-extended.vercel.app/api/top-langs?username=j02760&langs_count=6&theme=tokyonight)
-
 [![GitHub Streak](https://streak-stats.demolab.com?user=j02760&theme=sunset-gradient&hide_border=true)](https://git.io/streak-stats)
