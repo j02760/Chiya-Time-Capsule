@@ -571,9 +571,9 @@ comment:
   #   # locale:                        # 自定义语言显示 (可选)
   #   #   placeholder: '请留言...'      # 自定义输入框占位文本
   giscus:
-    repo: your-username/your-repo  # GitHub 仓库名称
-    repoId: your-repo-id           # GitHub 仓库 ID
-    categoryId: your-category-id   # GitHub 讨论分类 ID
+    repo: j02760/Chiya-Time-Capsule  # GitHub 仓库名称
+    repoId: R_kgDOT3dqwg          # GitHub 仓库 ID
+    categoryId: DIC_kwDOT3dqws4DDatc   # GitHub 讨论分类 ID
     mapping: pathname              # 映射方式 (默认: 'pathname')
     term: 'your-term'              # 讨论标题 (默认: 'your-term')
     strict: false                  # 严格模式 (默认: false)
