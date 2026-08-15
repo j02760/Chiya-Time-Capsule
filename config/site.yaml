@@ -16,20 +16,20 @@ site:
   subtitle: 是什麼地方呢~ # 網站副標題
   name: 白色毛球 # 作者名稱 - 請修改為你的名字
   description: 放置個人日常瑣事的地方 # 網站描述
-  avatar: /img/avatar.jpg # 網站頭像
+  avatar: /img/avatar.webp # 網站頭像
   showLogo: false # 是否顯示 Logo
   author: 白色毛球 # 作者名稱 - 請修改為你的名字
   url: https://chiya-koharu.vercel.app # 站點 URL 用於 RSS 和 SEO
-  defaultOgImage: /img/avatar.jpg # 預設 Open Graph 圖片
-  startYear: 2026 # 建站年份
-  timezone: Asia/Shanghai # 時區配置 (IANA 格式)，用於日期顯示和處理
+  defaultOgImage: /img/avatar.webp # 預設 Open Graph 圖片
+  startYear: 2026.8 # 建站年份
+  timezone: Asia/Taipei # 時區配置 (IANA 格式)，用於日期顯示和處理
   keywords: # SEO 關鍵字 (全局)
   #  - 博客
   #  - Astro
   #  - 技术
   #  - 前端
     # 请根据你的网站内容添加关键词
-  # breadcrumbHome: 首页  # 面包屑导航中首页的显示名称（默认: '首页'）
+  breadcrumbHome: 首頁  # 面包屑导航中首页的显示名称（默认: '首页'）
   # icp:                         # ICP 备案号（可自定义链接）
   #   text: "粤ICP备xxxxxxxxxx号"
   #   link: "https://beian.miit.gov.cn/"
@@ -47,7 +47,7 @@ site:
 #   - label: 语言显示名称（如 '中文', 'English'）
 # -----------------------------------------------------------------------------
 i18n:
-  defaultLocale: zh_TW
+  defaultLocale: zh-TW
   locales:
     - code: zh
       label: 简体中文
@@ -56,7 +56,7 @@ i18n:
       # enabled: false  # 内容存在但暂时禁用（保留内容但不生成路由）
     - code: ja
       label: 日本語
-    - code: zh_TW
+    - code: zh-TW
       label: 繁體中文
 # =============================================================================
 # Category Map
@@ -67,10 +67,11 @@ categoryMap:
   # Primary categories
   隨筆: life
   筆記: note
+  遊戲: games
   工具: tools
   # 週刊: weekly
   # Secondary categories (for nested paths)
-  前端: front-end
+  # 前端: front-end
   # Add more as needed:
   # 书摘: reading
   # 后端: back-end
@@ -90,19 +91,19 @@ categoryMap:
 featuredCategories:
   - link: life # 對應 categoryMap 中 隨筆: life
     label: 隨筆
-    image: /img/cover/2.webp
+    image: /img/a0.webp
     description: 生活記錄、隨想隨筆
   - link: note # 對應 categoryMap 中 筆記: note
     label: 筆記
-    image: /img/cover/4.webp
+    image: /img/a1.webp
     description: 技術筆記、學習筆記
-  - link: note/front-end # 嵌套分類：筆記/前端
-    label: 前端
-    image: /img/cover/1.webp
-    description: 前端技術相關
+  - link: games # 對應 categoryMap 中 遊戲: games
+    label: 遊戲
+    image: /img/a2.webp
+    description: 遊戲相關
   - link: tools # 對應 categoryMap 中 工具: tools
     label: 工具
-    image: /img/cover/11.webp
+    image: /img/a3.webp
     description: 工具使用、效率提升
 
 # =============================================================================
@@ -126,7 +127,7 @@ featuredSeries:
   - slug: weekly # URL 路径: /weekly
     categoryName: 週刊 # 必须与 categoryMap 中的分类名匹配
     label: 我的週刊 # 简短名称
-    fullName: 我的技术週刊 # 完整名称
+    fullName: 我的技术週刊 #ㄋ 完整名称
     description: | # 支援多行 Markdown
       這是週刊/系列文章功能的示例配置。
       你可以用它來發布定期更新的系列內容，如技術週刊、讀書筆記系列等。

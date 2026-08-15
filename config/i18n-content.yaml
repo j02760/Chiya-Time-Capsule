@@ -16,8 +16,9 @@ en:
     life: Life
     note: Notes
     tools: Tools
-    weekly: Weekly
-    front-end: Frontend
+    # weekly: Weekly
+    games: Games
+    # front-end: Frontend
 
   series:
     weekly:
@@ -31,9 +32,12 @@ en:
     note:
       label: Notes
       description: Technical and study notes
-    note/front-end:
-      label: Frontend
-      description: Frontend technologies
+    games:
+      label: Games
+      description: Game-related content
+    # note/front-end:
+    #   label: Frontend
+    #   description: Frontend technologies
     tools:
       label: Tools
       description: Tool usage and productivity
@@ -43,8 +47,9 @@ ja:
     life: 日常
     note: ノート
     tools: ツール
-    weekly: 週刊
-    front-end: フロントエンド
+    # weekly: 週刊
+    games: ゲーム
+    # front-end: フロントエンド
 
   series:
     weekly:
@@ -58,9 +63,12 @@ ja:
     note:
       label: ノート
       description: 技術と学習のノート
-    note/front-end:
-      label: フロントエンド
-      description: フロントエンド技術
+    games:
+      label: ゲーム
+      description: ゲーム関連のコンテンツ
+    # note/front-end:
+    #   label: フロントエンド
+    #   description: フロントエンド技術
     tools:
       label: ツール
       description: ツールの使い方と生産性
