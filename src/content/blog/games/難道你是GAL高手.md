@@ -34,7 +34,7 @@ categories:
 
 https://store.steampowered.com/app/4513880/GAL/
 
-![image](/public/img/cbd5e9fc0480da2a.webp)
+![image](/img/cbd5e9fc0480da2a.webp)
 
 
 

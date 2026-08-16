@@ -16,4 +16,4 @@ categories:
 ~~恩~ 可能還會有旮旯給木~~
 
 ciallo (∠·ω )⌒★
-![image](/public/img/ciallo1.webp)
+![image](/img/ciallo1.webp)
