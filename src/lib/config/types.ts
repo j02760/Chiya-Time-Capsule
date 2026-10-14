@@ -113,6 +113,14 @@ export interface FriendLink {
   desc: string;
   image: string;
   color?: string;
+  /** ID of a group defined in friends.groups. */
+  group?: string;
+}
+
+export interface FriendGroup {
+  id: string;
+  title: string;
+  description?: string;
 }
 
 export interface FriendsIntro {
@@ -125,6 +133,7 @@ export interface FriendsIntro {
 
 export interface FriendsConfig {
   intro: FriendsIntro;
+  groups?: FriendGroup[];
   data: FriendLink[];
 }
 
@@ -191,6 +200,29 @@ export interface ContentConfig {
 
 /** Content config after defaults are applied — no optional fields. */
 export type ResolvedContentConfig = Required<ContentConfig>;
+
+// =============================================================================
+// Motion
+// =============================================================================
+
+/** Site-wide motion intensity; visitors can override it in the Settings Center. */
+export type MotionLevel = 'lively' | 'subtle' | 'reduced';
+
+/**
+ * Raw `motion:` section of `config/site.yaml`. Every field is optional —
+ * use {@link ResolvedMotionConfig} for the value consumers see.
+ */
+export interface MotionConfig {
+  /** Default level for visitors who have not picked one. */
+  level?: MotionLevel;
+  /** Falling sakura petals over page covers; only runs at the `lively` level. */
+  heroPetals?: boolean;
+  /** Petal burst where interactive elements are clicked; only runs at the `lively` level. */
+  clickBurst?: boolean;
+}
+
+/** Motion config after defaults are applied — no optional fields. */
+export type ResolvedMotionConfig = Required<MotionConfig>;
 
 // =============================================================================
 // Navigation
@@ -644,6 +676,11 @@ export interface I18nConfig {
   locales: LocaleConfig[];
 }
 
+/** Public writing room and its preview page. Disabled unless explicitly enabled. */
+export interface WritingRoomConfig {
+  enabled?: boolean;
+}
+
 // =============================================================================
 // Root Configuration Type
 // =============================================================================
@@ -658,8 +695,16 @@ export interface SiteYamlConfig {
   announcements?: AnnouncementConfig[];
   defaultCoverList?: string[];
   content?: ContentConfig;
+  /** Motion intensity default and decorative sakura effects. */
+  motion?: MotionConfig;
   /** Optional dynamic moments archive backed by koharu-suite. */
   moments?: MomentsConfig;
+  /** Optional public Markdown writing room. */
+  editor?: WritingRoomConfig;
+  /** Post marks dictionary (落款); validated by normalizeColophonConfig. */
+  colophon?: unknown;
+  /** Markdown copy / download / open-in-writing-room actions on post pages. */
+  postActions?: unknown;
   navigation?: RouterItem[];
   comment?: CommentConfig;
   analytics?: AnalyticsConfig;

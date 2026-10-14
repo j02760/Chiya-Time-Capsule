@@ -9,11 +9,15 @@
 import type { DefaultUIStrings, UIStrings } from '../types';
 import { uiStrings as en } from './en';
 import { uiStrings as ja } from './ja';
+import { uiStrings as ko } from './ko';
 import { uiStrings as zh } from './zh';
+import { uiStrings as zhTW } from './zh-TW';
 
 /** All translation dictionaries indexed by locale code */
 export const translations: Record<string, DefaultUIStrings | UIStrings> = {
   zh,
   en,
   ja,
+  ko,
+  'zh-TW': zhTW,
 };

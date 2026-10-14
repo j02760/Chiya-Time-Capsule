@@ -2,9 +2,11 @@ import { LazyMotionProvider } from '@components/common/LazyMotionProvider';
 import { microDampingPreset } from '@constants/anim/spring';
 import type { FriendLink } from '@constants/friends-config';
 import { useIsMounted } from '@hooks/useIsMounted';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useMotionLevel } from '@hooks/useMotionLevel';
 import { useStore } from '@nanostores/react';
 import { m, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { type MouseEvent, useRef } from 'react';
+import { type MouseEvent, useEffect, useRef } from 'react';
 import { cn, normalizeHexColor } from '@/lib/utils';
 import { christmasEnabled } from '@/store/christmas';
 
@@ -35,6 +37,9 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const isMounted = useIsMounted();
   const isChristmasEnabled = useStore(christmasEnabled);
+  const shouldReduceMotion = useMotionLevel() === 'reduced';
+  const canHover = useMediaQuery('(hover: hover) and (pointer: fine)');
+  const tiltEnabled = !shouldReduceMotion && canHover;
 
   // Motion values for magnetic hover
   const x = useMotionValue(0);
@@ -43,6 +48,14 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
   // Spring animation for smooth magnetic effect
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), microDampingPreset);
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-15, 15]), microDampingPreset);
+
+  useEffect(() => {
+    if (tiltEnabled) return;
+    x.jump(0);
+    y.jump(0);
+    rotateX.jump(0);
+    rotateY.jump(0);
+  }, [tiltEnabled, x, y, rotateX, rotateY]);
 
   // Spotlight effect
   const sheenX = useTransform(x, [-0.5, 0.5], ['0%', '100%']);
@@ -87,24 +100,20 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
           { 'z-5': isMounted && isChristmasEnabled },
         )}
         style={{ perspective: '1000px' }}
-        transition={{
-          duration: 0.5,
-          delay: index * 0.05,
-          ...microDampingPreset,
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.05, ...microDampingPreset }}
+        onMouseMove={tiltEnabled ? handleMouseMove : undefined}
+        onMouseLeave={tiltEnabled ? handleMouseLeave : undefined}
       >
         <m.div
-          className="relative h-full w-full rounded-2xl bg-white p-3 shadow-xl ring-1 ring-gray-900/5 dark:bg-gray-800 dark:ring-white/10"
+          className="relative h-full w-full rounded-2xl bg-card p-3 shadow-xl ring-1 ring-foreground/5 dark:ring-white/10"
           style={{
             transformStyle: 'preserve-3d',
-            rotateX,
-            rotateY,
+            rotateX: tiltEnabled ? rotateX : 0,
+            rotateY: tiltEnabled ? rotateY : 0,
           }}
         >
           {/* Inner Card Container */}
-          <div className="relative h-full w-full overflow-hidden rounded-xl bg-gray-50 dark:bg-gray-900">
+          <div className="relative h-full w-full overflow-hidden rounded-xl bg-muted/60">
             {/* Background Image / Color */}
             <div
               className="absolute inset-0 h-16 w-full"
@@ -113,7 +122,7 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
 
             {/* Avatar */}
             <div className="absolute top-8 left-1/2 -translate-x-1/2">
-              <div className="relative h-14 w-14 overflow-hidden rounded-full border-4 border-white bg-white shadow-lg dark:border-gray-800 dark:bg-gray-800">
+              <div className="relative h-14 w-14 overflow-hidden rounded-full border-4 border-card bg-card shadow-lg">
                 <img
                   src={avatarImage}
                   alt={friend.owner}
@@ -126,23 +135,25 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
             {/* Content */}
             <div className="mt-24 flex h-full flex-col px-2 pb-3 text-center">
               <p
-                className="truncate font-bold text-gray-900 text-sm transition-colors group-hover:text-(--card-color) dark:text-white"
+                className="truncate font-bold text-foreground text-sm transition-colors group-hover:text-(--card-color)"
                 style={{ '--card-color': cardColor } as CSSCustomProperties}
               >
                 {friend.owner}
               </p>
-              <p className="mb-1 truncate font-medium text-[10px] text-gray-400 uppercase tracking-wider">{friend.site}</p>
-              <p className="line-clamp-2 text-[10px] text-gray-600 dark:text-gray-300">{friend.desc}</p>
+              <p className="mb-1 truncate font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+                {friend.site}
+              </p>
+              <p className="line-clamp-2 text-[10px] text-foreground/75">{friend.desc}</p>
             </div>
           </div>
 
           {/* Spotlight Overlay */}
-          <m.div
-            className="pointer-events-none absolute inset-0 z-10 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background: spotlight,
-            }}
-          />
+          {tiltEnabled && (
+            <m.div
+              className="pointer-events-none absolute inset-0 z-10 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{ background: spotlight }}
+            />
+          )}
 
           {/* Border Glow */}
           <div

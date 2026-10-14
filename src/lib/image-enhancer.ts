@@ -3,8 +3,13 @@
  * Adds loaded/error states, fullscreen button, and portrait image grouping.
  *
  * Lightbox functionality has been migrated to React (ImageLightbox.tsx).
- * This module dispatches 'open-image-lightbox' custom events instead.
+ * Its lightweight modal store preserves clicks while the viewer is still loading.
  */
+
+import { openModal } from '@store/modal';
+import { containBox, type LightboxOrigin } from './lightbox-flip';
+
+type LightboxImage = { src: string; alt: string; origin?: LightboxOrigin };
 
 // WeakSet to track enhanced images and avoid re-processing
 const enhancedImages = new WeakSet<HTMLImageElement>();
@@ -45,15 +50,21 @@ function createErrorPlaceholder(img: HTMLImageElement): HTMLElement {
   return placeholder;
 }
 
+/** Painted image box on screen (object-fit: contain aware), so the lightbox can zoom out of it. */
+function measureOrigin(img: HTMLImageElement): LightboxOrigin {
+  const { left, top, width, height } = img.getBoundingClientRect();
+  return {
+    box: containBox({ left, top, width, height }, img.naturalWidth, img.naturalHeight),
+    naturalWidth: img.naturalWidth,
+    naturalHeight: img.naturalHeight,
+  };
+}
+
 /**
- * Open image in React lightbox via custom event
+ * Open image in the on-demand React lightbox.
  */
-function openImageLightbox(src: string, alt: string, images: { src: string; alt: string }[], currentIndex: number): void {
-  window.dispatchEvent(
-    new CustomEvent('open-image-lightbox', {
-      detail: { src, alt, images, currentIndex },
-    }),
-  );
+function openImageLightbox(src: string, alt: string, images: LightboxImage[], currentIndex: number): void {
+  openModal('imageLightbox', { src, alt, images, currentIndex });
 }
 
 /**
@@ -77,13 +88,18 @@ function handleImageClick(e: Event): void {
   // Collect all loaded images from the nearest content container
   const container = img.closest('.custom-content') ?? document.body;
   const allImages = Array.from(container.querySelectorAll<HTMLImageElement>('.markdown-image.loaded'));
-  const images = allImages.map((i) => ({ src: i.src, alt: i.alt || '图片' }));
+  const images = allImages.map((i) => ({ src: i.src, alt: i.alt || '图片', origin: measureOrigin(i) }));
   const currentIndex = Math.max(0, allImages.indexOf(img));
 
+  // Give the focus manager a stable return target when the image itself was clicked.
+  img
+    .closest('.markdown-image-wrapper')
+    ?.querySelector<HTMLButtonElement>('.markdown-image-fullscreen')
+    ?.focus({ preventScroll: true });
   openImageLightbox(img.src, img.alt || '图片', images, currentIndex);
 }
 
-export function enhanceImages(container: Element): void {
+export function enhanceImages(container: Element): () => void {
   const images = container.querySelectorAll<HTMLImageElement>('.markdown-image');
 
   // Event delegation for clicks
@@ -133,6 +149,10 @@ export function enhanceImages(container: Element): void {
 
   // Initial grouping for already-loaded images
   scheduleGrouping();
+  return () => {
+    clearTimeout(groupTimer);
+    container.removeEventListener('click', handleImageClick);
+  };
 }
 
 function handleImageLoaded(img: HTMLImageElement): void {

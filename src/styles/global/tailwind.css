@@ -1,6 +1,7 @@
 @import "./reset.css";
-@import "tailwindcss";
+@import "tailwindcss" source("../../");
 @import "./utils.css";
+@source "../../../config";
 @config "../../../tailwind.config.mjs";
 
 @font-face {
@@ -27,7 +28,8 @@
 
   body {
     overscroll-behavior-y: none;
-    background: linear-gradient(to top, var(--gradient-bg-end) 0, var(--gradient-bg-start) 30%) no-repeat bottom;
+    /* Darken only the footer zone: a percentage would tint the sider beside long articles off the paper's colour. */
+    background: linear-gradient(to top, var(--gradient-bg-end) 0, var(--gradient-bg-start) 48rem) no-repeat bottom;
     scroll-behavior: smooth;
     letter-spacing: 0.02em;
     color: hsl(var(--foreground));
@@ -58,7 +60,8 @@
 
   html {
     scrollbar-gutter: stable;
-    background: linear-gradient(to top, var(--gradient-bg-end) 0, var(--gradient-bg-start) 30%) no-repeat bottom;
+    /* Darken only the footer zone: a percentage would tint the sider beside long articles off the paper's colour. */
+    background: linear-gradient(to top, var(--gradient-bg-end) 0, var(--gradient-bg-start) 48rem) no-repeat bottom;
     overflow: auto;
   }
 
@@ -68,26 +71,10 @@
     }
   }
 
-  .vertical-scrollbar::-webkit-scrollbar {
-    display: block;
-    width: var(--scrollbar-width, 0.25rem);
-    background: hsl(var(--background)); /* background color */
-  }
-
-  .vertical-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.5); /* thumb color */
-    border-radius: 0.5rem;
-  }
-
-  .horizontal-scrollbar::-webkit-scrollbar {
-    display: block;
-    height: var(--scrollbar-width, 0.25rem);
-    background: hsl(var(--background)); /* background color */
-  }
-
-  .horizontal-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.5); /* thumb color */
-    border-radius: 0.5rem;
+  /* After preflight, whose :-moz-focusring { outline: auto } would otherwise win in Firefox. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
   }
 
   .scrollbar-hidden {
@@ -101,12 +88,6 @@
 
 /* utils */
 @layer components {
-  .shoka-button-shadow {
-    box-shadow: 0 0 0.75rem var(--color-pink-a3);
-    &:hover {
-      box-shadow: 0 0 0.75rem var(--color-pink);
-    }
-  }
   #site-header {
     @apply relative translate-y-0 text-white transition-transform duration-300;
 

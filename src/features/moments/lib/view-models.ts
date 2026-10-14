@@ -56,6 +56,8 @@ function toMedia(media: PublicMedia, sourceUrl: string | null): MomentMediaViewM
     fileName: media.fileName,
     fileSize: parseFileSize(media.fileSize),
     mimeType: media.mimeType,
+    width: media.width,
+    height: media.height,
     alt: media.fileName,
     sourceUrl,
   };
@@ -87,6 +89,7 @@ export function toMessageViewModel(
   return {
     id: message.id,
     channel: toChannelViewModel(config, channel),
+    authorSignature: message.authorSignature,
     publishedAt: message.publishedAt,
     publishedLabel: displayDate.datetime(message.publishedAt),
     revision: message.revision,

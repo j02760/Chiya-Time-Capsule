@@ -5,6 +5,7 @@
 
 import { CopyButton } from '@components/markdown/shared/CopyButton';
 import { MacToolbar } from '@components/markdown/shared/MacToolbar';
+import { useElementVisibility } from '@hooks/useElementVisibility';
 import { useTranslation } from '@hooks/useTranslation';
 import { Icon } from '@iconify/react';
 import { extractCode, extractCodeClassName, extractCodeHTML, extractLanguage } from '@lib/content-enhancer-utils';
@@ -18,7 +19,12 @@ interface CodeBlockToolbarProps {
   enableFullscreen?: boolean;
 }
 
-export function CodeBlockToolbar({ preElement, enableCopy = true, enableFullscreen = true }: CodeBlockToolbarProps) {
+export function CodeBlockToolbar(props: CodeBlockToolbarProps) {
+  const isVisible = useElementVisibility(props.preElement.parentElement ?? props.preElement);
+  return isVisible ? <RenderedCodeBlockToolbar {...props} /> : null;
+}
+
+function RenderedCodeBlockToolbar({ preElement, enableCopy = true, enableFullscreen = true }: CodeBlockToolbarProps) {
   const { t } = useTranslation();
   const info = useMemo(
     () => ({
@@ -77,7 +83,7 @@ export function CodeBlockToolbar({ preElement, enableCopy = true, enableFullscre
           <button
             type="button"
             onClick={() => setCollapsed((prev) => !prev)}
-            className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-95"
+            className="flex size-11 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-95"
             aria-label={collapsed ? t('code.expand') : t('code.collapse')}
             aria-expanded={!collapsed}
             title={collapsed ? t('code.expand') : t('code.collapse')}
@@ -91,8 +97,12 @@ export function CodeBlockToolbar({ preElement, enableCopy = true, enableFullscre
         {enableFullscreen && (
           <button
             type="button"
-            onClick={handleFullscreen}
-            className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-95"
+            onClick={(event) => {
+              // Safari does not focus buttons on tap; record the return target before opening the dialog.
+              event.currentTarget.focus({ preventScroll: true });
+              handleFullscreen();
+            }}
+            className="flex size-11 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-95"
             aria-label={t('code.fullscreen')}
             title={t('code.fullscreen')}
           >
@@ -110,7 +120,8 @@ export function CodeBlockToolbar({ preElement, enableCopy = true, enableFullscre
           title={t('code.expand')}
         >
           <span className="code-block-expand-overlay-icon">
-            <Icon icon="ri:arrow-down-s-line" className="size-5" />
+            <Icon icon="ri:arrow-down-s-line" className="size-4" />
+            {t('code.expand')}
           </span>
         </button>
       )}

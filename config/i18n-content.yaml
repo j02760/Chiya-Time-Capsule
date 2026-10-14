@@ -9,6 +9,7 @@
 #     categories:    { <slug>: <translated name> }
 #     series:        { <slug>: { label?, fullName?, description? } }
 #     featuredCategories: { <link>: { label?, description? } }
+#     colophon:      { groups: { <id>: <label> }, marks: { <id>: { label?, description? } } }
 # =============================================================================
 
 en:
@@ -42,6 +43,17 @@ en:
       label: Tools
       description: Tool usage and productivity
 
+  colophon:
+    groups:
+      authorship: Written by
+      notice: Heads-up
+    marks:
+      handwritten: { label: Handwritten, description: Every word here was typed by me. }
+      ai-cowrite: { label: Co-written with AI, description: "I wrote it; AI helped shape ideas and wording." }
+      ai-lead: { label: AI-drafted, description: "AI drafted most of the text; I selected and edited it." }
+      spoiler: { label: Spoilers, description: Discusses later plot points. Maybe bookmark it until you catch up. }
+      outdated: { label: Possibly outdated, description: "Written a while ago; versions and approaches may have changed." }
+
 ja:
   categories:
     life: 日常
@@ -72,3 +84,14 @@ ja:
     tools:
       label: ツール
       description: ツールの使い方と生産性
+
+  colophon:
+    groups:
+      authorship: 執筆
+      notice: ご注意
+    marks:
+      handwritten: { label: 手書き, description: 一字一句、自分で書きました。 }
+      ai-cowrite: { label: AI と共作, description: 主筆は私、AI には構成や言い回しを手伝ってもらいました。 }
+      ai-lead: { label: AI 主筆, description: 本文の大半は AI が下書きし、私が選んで手直ししました。 }
+      spoiler: { label: ネタバレあり, description: 作品の後半の展開に触れています。未視聴ならブックマークしてからどうぞ。 }
+      outdated: { label: 情報が古い可能性, description: 少し前に書いた記事なので、バージョンややり方が変わっているかもしれません。 }

@@ -13,6 +13,8 @@
 
 import { LazyMotionProvider } from '@components/common/LazyMotionProvider';
 import { animation } from '@constants/design-tokens';
+import { useMotionLevel } from '@hooks/useMotionLevel';
+import { useTranslation } from '@hooks/useTranslation';
 import { cn } from '@lib/utils';
 import { useStore } from '@nanostores/react';
 import { $isDrawerOpen, toggleDrawer } from '@store/modal';
@@ -24,7 +26,6 @@ const lineVariants: Variants = {
     rotate: 0,
     y: 0,
     opacity: 1,
-    transition: animation.spring.menu,
   },
   opened: (lineIndex: number) => {
     switch (lineIndex) {
@@ -33,28 +34,24 @@ const lineVariants: Variants = {
           rotate: 45,
           y: 6,
           opacity: 1,
-          transition: animation.spring.menu,
         };
       case 2:
         return {
           rotate: 0,
           y: 0,
           opacity: 0,
-          transition: animation.spring.menu,
         };
       case 3:
         return {
           rotate: -45,
           y: -6,
           opacity: 1,
-          transition: animation.spring.menu,
         };
       default:
         return {
           rotate: 0,
           y: 0,
           opacity: 1,
-          transition: animation.spring.menu,
         };
     }
   },
@@ -63,10 +60,14 @@ const lineVariants: Variants = {
 interface MenuIconProps {
   className?: string;
   id?: string;
+  locale?: string;
 }
 
-const MenuIcon = ({ className, id }: MenuIconProps) => {
+const MenuIcon = ({ className, id, locale }: MenuIconProps) => {
   const isOpen = useStore($isDrawerOpen);
+  const shouldReduceMotion = useMotionLevel() === 'reduced';
+  const { t } = useTranslation(locale);
+  const label = isOpen ? t('drawer.close') : t('drawer.openMenu');
 
   return (
     <LazyMotionProvider>
@@ -74,8 +75,9 @@ const MenuIcon = ({ className, id }: MenuIconProps) => {
         <button
           className="size-10 flex-center cursor-pointer select-none rounded-full bg-white/20 text-shoka"
           onClick={toggleDrawer}
-          aria-label={isOpen ? '关闭菜单' : '打开菜单'}
+          aria-label={label}
           aria-expanded={isOpen}
+          aria-controls="mobile-drawer"
           type="button"
           style={{
             viewTransitionName: 'menu-icon',
@@ -90,12 +92,12 @@ const MenuIcon = ({ className, id }: MenuIconProps) => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            role="img"
-            aria-label={isOpen ? '关闭菜单' : '打开菜单'}
+            aria-hidden="true"
           >
             <m.g
               variants={lineVariants}
               initial={false}
+              transition={shouldReduceMotion ? { duration: 0 } : animation.spring.menu}
               animate={isOpen ? 'opened' : 'closed'}
               custom={1}
               style={{ originX: 0.5, originY: 0.25 }}
@@ -105,6 +107,7 @@ const MenuIcon = ({ className, id }: MenuIconProps) => {
             <m.g
               variants={lineVariants}
               initial={false}
+              transition={shouldReduceMotion ? { duration: 0 } : animation.spring.menu}
               animate={isOpen ? 'opened' : 'closed'}
               custom={2}
               style={{ originX: 0.5, originY: 0.5 }}
@@ -114,6 +117,7 @@ const MenuIcon = ({ className, id }: MenuIconProps) => {
             <m.g
               variants={lineVariants}
               initial={false}
+              transition={shouldReduceMotion ? { duration: 0 } : animation.spring.menu}
               animate={isOpen ? 'opened' : 'closed'}
               custom={3}
               style={{ originX: 0.5, originY: 0.75 }}

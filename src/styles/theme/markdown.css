@@ -1,4 +1,21 @@
 .prose {
+  /* Typography plugin colors mapped to theme tokens, so light and dark prose share the site palette. */
+  --tw-prose-body: hsl(var(--foreground) / 0.9);
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-lead: hsl(var(--muted-foreground));
+  --tw-prose-links: hsl(var(--primary));
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-counters: hsl(var(--primary));
+  --tw-prose-bullets: hsl(var(--primary) / 0.7);
+  --tw-prose-hr: hsl(var(--border));
+  --tw-prose-quotes: hsl(var(--foreground) / 0.78);
+  --tw-prose-quote-borders: hsl(var(--primary) / 0.45);
+  --tw-prose-captions: hsl(var(--muted-foreground));
+  --tw-prose-kbd: hsl(var(--foreground));
+  --tw-prose-code: hsl(var(--primary));
+  --tw-prose-th-borders: hsl(var(--border));
+  --tw-prose-td-borders: hsl(var(--border) / 0.7);
+
   /* Reader variables are set by src/store/settings.ts and the inline Layout.astro script. */
   font-size: var(--reader-font-size, 1rem);
   line-height: var(--reader-line-height, 1.8);
@@ -21,6 +38,32 @@
 
   a {
     @apply text-primary hover:text-blue no-underline transition-colors duration-300 hover:underline;
+  }
+
+  /* Inline links carry a quiet underline so they are recognizable without relying on color alone. */
+  :where(p, li, td, th, blockquote, figcaption, dd, dt) > a:not(.anchor-link) {
+    text-decoration-line: underline;
+    text-decoration-color: hsl(var(--primary) / 0.35);
+    text-decoration-thickness: 0.075em;
+    text-underline-offset: 0.24em;
+    transition:
+      color var(--dur-fast) var(--ease-out-quart),
+      text-decoration-color var(--dur-fast) var(--ease-out-quart);
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  /* CJK text has no true italic; keep quotes upright and let the border mark them. */
+  blockquote {
+    font-style: normal;
+    font-weight: 400;
+
+    p:first-of-type::before,
+    p:last-of-type::after {
+      content: none;
+    }
   }
 
   /* ========== 行内代码样式 ========== */
@@ -124,6 +167,13 @@
   h5:hover::before,
   h6:hover::before {
     opacity: 0.8;
+  }
+
+  /* The level label sits in the gutter, which is too narrow on phones. */
+  @media (max-width: 768px) {
+    :is(h1, h2, h3, h4, h5, h6)::before {
+      display: none;
+    }
   }
 
   /* 调整锚点链接居中对齐 */
@@ -332,16 +382,14 @@
   pre {
     position: relative;
     border-radius: 0 0 0.75rem 0.75rem;
-    border: 1px solid hsl(var(--border));
+    border: 1px solid var(--code-border);
     /* 重置 Typography 默认 padding */
     padding: 0;
     padding-inline-end: 0;
     overflow: hidden;
     margin: 0;
-    /* 覆盖 Typography 背景色 */
-    background-color: hsl(var(--card));
-    /* 阴影 */
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    /* biome-ignore lint/complexity/noImportantStyles: Shiki writes its theme background inline on every block. */
+    background-color: var(--code-surface) !important;
   }
 
   pre code {
@@ -351,6 +399,7 @@
     /* The parent pre already carries Typography's relative code scale. */
     font-size: inherit;
     line-height: 1.7;
+    tab-size: 2;
     /* 覆盖 Typography 默认值 */
     background-color: transparent;
     color: inherit;
@@ -368,28 +417,34 @@
     min-height: 0;
   }
 
-  /* Keep an eight-line preview so collapsed blocks still reveal useful context. */
-  .code-block-wrapper.code-collapsed > pre {
-    border-top-width: 0;
+  /* Expanding glides to the full height where interpolate-size is supported; elsewhere it snaps open. */
+  .code-block-wrapper.code-collapsible > pre > code {
+    interpolate-size: allow-keywords;
+    transition: height 0.42s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  /* Keep an eight-line preview so collapsed blocks still reveal useful context. */
   .code-block-wrapper.code-collapsed > pre > code {
-    max-height: calc(13.6em + 2rem);
-    overflow: hidden;
+    height: calc(13.6em + 2rem);
+    content-visibility: auto;
+    contain-intrinsic-height: auto calc(13.6em + 2rem);
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* Fade the tail out instead of laying a card-colored gradient over it. */
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 4.5rem), transparent calc(100% - 0.5rem));
   }
 
   /* Reserve the toolbar row before the idle-hydrated controls mount. */
-  .code-block-wrapper.code-collapsed > .code-block-wrapper-toolbar-mount {
-    min-height: 2.625rem;
+  .code-block-wrapper > .code-block-wrapper-toolbar-mount {
+    min-height: 3.3125rem;
   }
 
   /* Toolbar-shaped skeleton until hydration fills the mount (mirrors MacToolbar chrome). */
-  .code-block-wrapper.code-collapsed > .code-block-wrapper-toolbar-mount:empty {
-    border: 1px solid hsl(var(--border));
+  .code-block-wrapper > .code-block-wrapper-toolbar-mount:empty {
+    border: 1px solid var(--code-border);
     border-bottom: 0;
     border-radius: 0.75rem 0.75rem 0 0;
-    background-color: hsl(var(--muted) / 0.5);
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    background-color: var(--code-toolbar);
   }
 
   /* Make the full toolbar a collapse toggle. */
@@ -410,29 +465,36 @@
     justify-content: center;
     border: 0;
     border-radius: 0 0 0.75rem 0.75rem;
-    padding-bottom: 0.5rem;
-    background: linear-gradient(to bottom, transparent, hsl(var(--card) / 0.9) 60%, hsl(var(--card)));
+    padding-bottom: 0.625rem;
+    background: transparent;
     color: hsl(var(--muted-foreground));
   }
 
   .code-block-expand-overlay-icon {
     display: flex;
-    width: 1.75rem;
-    height: 1.75rem;
     align-items: center;
-    justify-content: center;
-    border: 1px solid hsl(var(--border));
+    gap: 0.25rem;
+    border: 1px solid var(--code-border);
     border-radius: 9999px;
-    background-color: hsl(var(--card) / 0.85);
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+    padding: 0.25rem 0.75rem 0.25rem 0.5rem;
+    background-color: var(--code-toolbar);
+    box-shadow: 0 4px 12px -4px rgb(0 0 0 / 0.18);
+    font-size: 0.75rem;
+    line-height: 1.25rem;
     transition:
       color 0.2s ease,
-      transform 0.2s ease;
+      border-color 0.2s ease,
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .code-block-expand-overlay:hover .code-block-expand-overlay-icon {
+    border-color: hsl(var(--primary) / 0.45);
     color: hsl(var(--primary));
-    transform: translateY(0.125rem);
+    transform: translateY(-0.125rem);
+  }
+
+  .code-block-expand-overlay:active .code-block-expand-overlay-icon {
+    transform: translateY(0) scale(0.96);
   }
 
   .code-block-expand-overlay:focus-visible {
@@ -455,9 +517,48 @@
 
 /* ========== Code/Mermaid/Infographic wrapper layout ========== */
 
+:root {
+  /* One window surface for code, mermaid and infographic blocks: toolbar and body read as one piece. */
+  --code-surface: color-mix(in oklab, hsl(var(--card)) 97%, hsl(var(--primary)));
+  --code-toolbar: color-mix(in oklab, var(--code-surface) 96%, hsl(var(--foreground)));
+  --code-border: hsl(var(--border) / 0.8);
+}
+
+.dark {
+  --code-surface: color-mix(in oklab, hsl(var(--card)) 80%, #000);
+  /* Lifted with the accent, not white: a white mix reads as cool grey against the night-sakura plum. */
+  --code-toolbar: color-mix(in oklab, color-mix(in oklab, hsl(var(--card)) 88%, #000) 93%, hsl(var(--primary)));
+  --code-border: hsl(var(--border) / 0.9);
+}
+
 .code-block-wrapper {
   position: relative;
   margin-bottom: 1.25rem;
+}
+
+/* The window casts one shadow; the toolbar and body inside it stay flat so no seam shows between them. */
+:is(.code-block-wrapper, .mermaid-wrapper, .infographic-wrapper) {
+  border-radius: 0.75rem;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 10px 24px -14px rgb(0 0 0 / 0.22);
+}
+
+.dark :is(.code-block-wrapper, .mermaid-wrapper, .infographic-wrapper) {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.2),
+    0 12px 28px -14px rgb(0 0 0 / 0.55);
+}
+
+/* Traffic lights rest as gray dots, like an unfocused macOS window, and light up with the block. */
+.traffic-lights > * {
+  transition: background-color 0.25s ease;
+}
+
+@media (hover: hover) {
+  :is(.code-block-wrapper, .mermaid-wrapper, .infographic-wrapper):not(:hover, :focus-within) .traffic-lights > * {
+    background-color: hsl(var(--foreground) / 0.14);
+  }
 }
 
 /* 如果第一个子节点就是标题 */
@@ -658,20 +759,41 @@
 
 /* ========== Mermaid layout styles ========== */
 
+/* Screens outside the viewport should not keep the loading skeleton animating. */
+.custom-content pre.mermaid:not([data-mermaid-visible]) {
+  animation: none;
+}
+
 .mermaid-wrapper {
+  position: relative;
   margin-bottom: 1.25rem;
 }
 
-/* Mermaid pre styling when in wrapper */
+/* Mermaid pre styling when in wrapper; the bottom padding holds the resize grip */
 .mermaid-wrapper > pre.mermaid {
   border-radius: 0 0 0.75rem 0.75rem;
-  border: 1px solid hsl(var(--border));
-  border-top: none;
-  padding: 1rem;
+  border: 1px solid var(--code-border);
+  padding: 1rem 1rem 1.5rem;
   margin: 0;
   overflow: hidden;
-  background-color: hsl(var(--card));
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  background-color: var(--code-surface);
+}
+
+/* Once useDiagramScale sizes it, the same canvas as infographics: centered, scrolling sideways when zoomed past the column.
+   Block layout instead of astro-mermaid's flex centering, which would clip the left edge of an overflowing diagram. */
+.mermaid-wrapper > pre.mermaid[data-diagram-sized] {
+  display: block;
+  overflow: auto hidden;
+  overscroll-behavior-x: contain;
+
+  & > svg {
+    display: block;
+    width: var(--diagram-width);
+    height: var(--diagram-height);
+    /* biome-ignore lint/complexity/noImportantStyles: mermaid writes max-width inline on every SVG, which would stop zooming at natural size. */
+    max-width: none !important;
+    margin-inline: auto;
+  }
 }
 
 /* Fullscreen SVG container */
@@ -691,20 +813,41 @@
 /* ========== Infographic layout styles ========== */
 
 .infographic-wrapper {
+  position: relative;
   margin-bottom: 1.25rem;
 }
 
 /* Infographic container */
 .infographic-container {
   border-radius: 0 0 0.75rem 0.75rem;
-  border: 1px solid hsl(var(--border));
-  border-top: none;
+  border: 1px solid var(--code-border);
   margin: 0;
   overflow: auto;
-  background-color: hsl(var(--card));
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  background-color: var(--code-surface);
   min-height: 200px;
   min-width: min(920px, 100%);
+}
+
+/* In-article canvas (the fullscreen viewer reuses .infographic-container): useDiagramScale sizes the SVG,
+   it centers in the column and scrolls sideways once zoomed past it. The bottom padding holds the resize grip. */
+.infographic-wrapper > .infographic-container {
+  padding: 1rem 1rem 1.5rem;
+  overflow: auto hidden;
+  /* Panning a zoomed diagram to its edge must not turn into a trackpad back-navigation swipe. */
+  overscroll-behavior-x: contain;
+
+  &:not(:empty) {
+    min-height: 0;
+  }
+
+  & > svg {
+    display: block;
+    width: var(--diagram-width, 100%);
+    height: var(--diagram-height, auto);
+    margin-inline: auto;
+    /* The viewBox hugs the content, so item drop shadows paint into the padding instead of being clipped. */
+    overflow: visible;
+  }
 }
 
 /* Override infographic text wrapping - prevent title and label wrapping */
@@ -720,17 +863,20 @@
   justify-content: center;
   width: 100%;
   height: 100%;
+  padding: 1.5rem;
 }
 
 .infographic-svg-container svg {
   max-width: 100%;
   max-height: 100%;
+  overflow: visible;
 }
 
 /* ========== View Source Toggle Styles ========== */
 
 /* Mermaid source view styling */
 .mermaid-source {
+  color: hsl(var(--card-foreground));
   padding: 1rem 1.5rem;
   overflow-x: auto;
   font-size: 0.875em;
@@ -738,6 +884,41 @@
   font-family: var(--font-mono);
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.mermaid-fallback {
+  border: 1px solid hsl(var(--border));
+  border-top: none;
+  border-radius: 0 0 0.75rem 0.75rem;
+  background-color: hsl(var(--card));
+  overflow: hidden;
+}
+
+.mermaid-error {
+  padding: 1rem 1.5rem;
+  white-space: normal;
+
+  & span {
+    display: block;
+    margin: 0 0 0.5rem;
+  }
+
+  & > button {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: hsl(var(--accent));
+    }
+
+    &:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 2px;
+    }
+  }
 }
 
 /* ========== Code block meta enhancements ========== */
@@ -751,11 +932,12 @@
   font-size: 0.8em;
   font-weight: 500;
   color: hsl(var(--muted-foreground));
-  border-bottom: 1px solid hsl(var(--border));
-  background: hsl(var(--muted) / 0.3);
+  /* The code body's top border closes the toolbar, so the title only needs a quiet divider above it. */
+  border-top: 1px dashed var(--code-border);
 }
 
-.code-block-title a {
+.code-block-title a,
+.code-block-title-link {
   color: hsl(var(--shoka-info));
   text-decoration: none;
   font-size: 0.85em;
@@ -764,22 +946,67 @@
   text-decoration: underline;
 }
 
+/* Match the hydrated title row, including wrapping, until its portal takes over. */
+.code-block-title-placeholder {
+  border-inline: 1px solid var(--code-border);
+  background-color: var(--code-toolbar);
+}
+
+.code-block-wrapper-toolbar-mount:not(:empty) + .code-block-title-placeholder {
+  display: none;
+}
+
 /* Line highlighting (mark) */
-.prose pre code .line-highlight {
+:is(.prose pre, .code-fullscreen-content) code .line-highlight {
   background: hsl(var(--shoka-warning) / 0.12);
-  margin: 0 -1.5rem;
-  padding: 0 1.5rem;
+  margin: 0 calc(-1 * var(--code-gutter, 1.5rem));
+  padding: 0 var(--code-gutter, 1.5rem);
   display: inline-block;
-  width: calc(100% + 3rem);
+  width: calc(100% + 2 * var(--code-gutter, 1.5rem));
   border-left: 3px solid hsl(var(--shoka-warning));
-  padding-left: calc(1.5rem - 3px);
+  padding-left: calc(var(--code-gutter, 1.5rem) - 3px);
 }
 
 /* Command prompt */
-.prose pre code .has-prompt::before {
+:is(.prose pre, .code-fullscreen-content) code .has-prompt::before {
   content: attr(data-prompt) " ";
   color: hsl(var(--muted-foreground));
   user-select: none;
+}
+
+/* The portal lives outside .prose. Keep one scroll surface for both code axes. */
+.code-fullscreen-content {
+  --code-gutter: 1.25rem;
+  /* biome-ignore lint/complexity/noImportantStyles: same surface as the in-article window; Shiki writes its theme background inline. */
+  background-color: var(--code-surface) !important;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  margin: 0;
+  padding: 1rem var(--code-gutter);
+  overflow: auto;
+  overscroll-behavior: contain;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.code-fullscreen-content > code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  font: inherit;
+}
+
+.code-fullscreen-content[data-wrap] > code {
+  width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 992px) {
+  .code-fullscreen-content {
+    flex: 0 1 auto;
+  }
 }
 
 /* Reader font presets */

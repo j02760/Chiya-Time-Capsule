@@ -8,6 +8,7 @@ interface Props {
   post?: BlogPost;
   siderType?: HomeSiderType;
   isPostPage: boolean;
+  articleTools?: boolean;
 }
 
 import AnnouncementProvider from '@components/announcement/AnnouncementProvider.astro';
@@ -19,14 +20,12 @@ import Header from '@components/layout/Header.astro';
 import MobileDrawer from '@components/layout/MobileDrawer.astro';
 import SearchDialog from '@components/layout/SearchDialog';
 import SearchPortal from '@components/layout/SearchPortal.astro';
-import CodeBlockFullscreen from '@components/markdown/CodeBlockFullscreen';
-import DiagramFullscreen from '@components/markdown/DiagramFullscreen';
-import ImageLightbox from '@components/markdown/ImageLightbox';
+import ArticleViewers from '@components/markdown/ArticleViewers';
 import SettingsPanel from '@components/settings/SettingsPanel';
 import { Toaster } from '@components/ui/sonner';
 import { bgmConfig } from '@constants/site-config';
 
-const { post, siderType, isPostPage } = Astro.props;
+const { post, siderType, isPostPage, articleTools = true } = Astro.props;
 ---
 
 <ChristmasEffects transition:persist="christmas-snowfall" />
@@ -37,7 +36,7 @@ const { post, siderType, isPostPage } = Astro.props;
   </main>
   {bgmConfig.enabled && bgmConfig.audio.length > 0 && (
     <div transition:persist="global-bgm">
-      <GlobalBGMPlayer client:only="react" audioGroups={bgmConfig.audio} metingApi={bgmConfig.metingApi} />
+      <GlobalBGMPlayer client:panel="bgm" audioGroups={bgmConfig.audio} metingApi={bgmConfig.metingApi} />
     </div>
   )}
   <FloatingGroup client:only="react" />
@@ -45,10 +44,35 @@ const { post, siderType, isPostPage } = Astro.props;
   <MobileDrawer type={siderType} post={post} />
   <SearchDialog client:idle />
   <SearchPortal />
-  <CodeBlockFullscreen client:idle />
-  <DiagramFullscreen client:idle />
-  <ImageLightbox client:idle />
+  {articleTools && <div data-article-viewers><ArticleViewers client:idle /></div>}
   <Toaster client:idle />
   <AnnouncementProvider />
   <CodePenEmbed />
 </div>
+
+<script>
+  import { motionConfig } from '@constants/site-config';
+  import { setupArrivalRender } from '@lib/arrival-render';
+  import { setupHeaderContinuity } from '@lib/header-continuity';
+  import { setupMorphTransitions } from '@lib/morph-transitions';
+  import { setupPetalBurst } from '@lib/sakura/petal-burst';
+  import { setupScrollReveal } from '@lib/scroll-reveal';
+  import { setupScrollbarActivity } from '@lib/scrollbar-activity';
+  import { setupTouchPrefetch } from '@lib/touch-prefetch';
+  import { openModal, type ImageLightboxData } from '@store/modal';
+
+  // Keep the legacy event bridge independent of React's asynchronous hydration.
+  window.addEventListener('open-image-lightbox', (event) => {
+    if (document.querySelector('[data-article-viewers]')) {
+      openModal('imageLightbox', (event as CustomEvent<ImageLightboxData>).detail);
+    }
+  });
+
+  setupMorphTransitions();
+  setupHeaderContinuity();
+  setupArrivalRender();
+  setupScrollReveal();
+  setupScrollbarActivity();
+  setupTouchPrefetch();
+  if (motionConfig.clickBurst) setupPetalBurst();
+</script>

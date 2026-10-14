@@ -1,6 +1,8 @@
+import { useIsMounted } from '@hooks/useIsMounted';
 import { useTranslation } from '@hooks/useTranslation';
 import { translateCategoryName } from '@lib/content/category-translate';
-import { encodeSlug } from '@lib/route';
+import { encodeSlug } from '@lib/url';
+import { useMemo } from 'react';
 import { localizedPath } from '@/i18n';
 import { cn, shuffleArray } from '@/lib/utils';
 import type { PostRefWithCategory } from '@/types/blog';
@@ -14,12 +16,15 @@ interface Props {
 }
 
 export default function RelatedPostList({ posts, fallbackPool, fallbackCount, startIndex = 6, locale }: Props) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(locale);
+  const isMounted = useIsMounted();
   const hasRelatedPosts = posts.length > 0;
 
   // Shuffle fallback posts on client-side for fresh randomization
-  const fallbackPosts =
-    fallbackPool.length <= fallbackCount ? shuffleArray(fallbackPool) : shuffleArray(fallbackPool).slice(0, fallbackCount);
+  const fallbackPosts = useMemo(
+    () => (isMounted ? shuffleArray(fallbackPool).slice(0, fallbackCount) : []),
+    [isMounted, fallbackPool, fallbackCount],
+  );
 
   const displayPosts = hasRelatedPosts ? posts : fallbackPosts;
   const title = hasRelatedPosts ? t('post.relatedPosts') : '';
@@ -36,7 +41,7 @@ export default function RelatedPostList({ posts, fallbackPool, fallbackCount, st
           <a
             key={post.slug}
             href={localizedPath(`/post/${encodeSlug(post.link ?? post.slug)}`, locale)}
-            className="group flex gap-3 rounded-md p-2 text-sm transition-colors duration-300 hover:bg-foreground/5 hover:text-primary"
+            className="motion-reveal group flex gap-3 rounded-md p-2 text-sm transition-colors duration-300 [--rise-y:0.75rem] hover:bg-foreground/5 hover:text-primary"
           >
             <span className="shrink-0 font-mono text-foreground/30">{index + (hasRelatedPosts ? 1 : startIndex)}</span>
             <div className="flex min-w-0 flex-col gap-0.5">

@@ -1,12 +1,17 @@
 /**
- * Chinese (zh) — Default locale UI strings
+ * Chinese Traditional (zh-TW) — UI strings
  *
- * This is the source-of-truth dictionary. All translation keys are defined here.
- * Other locale files only need to provide translations for keys they override.
+ * Overrides the default locale (zh) dictionary. Keys missing here fall back to zh.
  */
 
 export const uiStrings = {
-  // ── Navigation ──────────────────────────────────────────────
+  // ── Index pages ────────────────────────────────────────────
+  'index.posts': '篇文章',
+  'index.years': '年',
+  'index.categories': '個分類',
+  'index.tags': '個標籤',
+  'index.mostUsed': '最常用',
+
   'nav.home': '首頁',
   'nav.posts': '文章',
   'nav.categories': '分類',
@@ -63,15 +68,25 @@ export const uiStrings = {
   'category.postsInCategory': '{name} 分類下的文章',
   'category.totalCategories': '共 {count} 個分類',
   'category.categoryLabel': '分類',
+  'category.filter': '子分類',
   'tag.allTags': '所有標籤',
   'tag.postsWithTag': '標籤「{name}」下的文章',
   'tag.totalTags': '共 {count} 個標籤',
   'tag.all': '全部',
+  'tag.filter': '過濾標籤',
+  'tag.filterPlaceholder': '輸入標籤名稱',
+  'tag.noMatches': '沒有匹配的標籤',
+  'tag.singleTags': '還有 {count} 個只出現過一次的標籤',
   'tag.postCount': '{count} 篇文章',
 
   // ── Archives ────────────────────────────────────────────────
   'archives.title': '歸檔',
   'archives.totalPosts': '共 {count} 篇',
+  'archives.jumpToYear': '跳到 {year} 年',
+  'archives.legendFew': '少',
+  'archives.legendMany': '多',
+  'archives.calendar': '寫作日曆',
+  'archives.monthLabel': '{year} 年 {month} 月 · {count} 篇',
 
   // ── Search ──────────────────────────────────────────────────
   'search.placeholder': '請輸入關鍵字搜尋',
@@ -86,7 +101,6 @@ export const uiStrings = {
   'search.suggestion': '沒有找到結果。嘗試以下搜尋：',
   'search.searching': '搜尋 [SEARCH_TERM]...',
   'search.dialogTitle': '搜尋文章',
-  'search.dialogHint': '輸入關鍵字搜尋博客文章',
   'search.dialogClose': '關閉',
   'search.dialogSelect': '選擇',
   'search.dialogOpen': '打開',
@@ -114,6 +128,14 @@ export const uiStrings = {
   'friends.copyConfig': '複製配置',
   'friends.copiedConfig': '已複製!',
   'friends.hint': '提示：複製上方程式碼並在下方評論區貼上發送即可，我會收到的～',
+  'friends.filterLabel': '按友鏈分組篩選',
+  'friends.all': '全部',
+  'friends.ungrouped': '未分組',
+  'friends.countUnit': '位朋友',
+  'friends.emptyTitle': '還沒有友鏈',
+  'friends.emptyDesc': '歡迎留下你的小站，成為第一位朋友。',
+  'friends.emptyGroupTitle': '這個分組還沒有站點',
+  'friends.emptyGroupDescription': '可以切換分組，看看其他小伙伴。',
 
   // ── Code Block ──────────────────────────────────────────────
   'code.copy': '複製程式碼',
@@ -135,6 +157,15 @@ export const uiStrings = {
   'diagram.resetZoom': '重置縮放',
   'diagram.fitToScreen': '適應螢幕',
   'diagram.download': '下載圖片',
+  'diagram.actualSize': '實際大小',
+  'diagram.resize': '調整圖表大小',
+  'diagram.resizeHint': '拖曳調整大小，雙擊還原',
+  'diagram.gestureHint': '雙指捏合或滾輪縮放 · 拖曳平移 · 雙擊放大',
+  'diagram.renderError': '圖表暫時無法顯示',
+  'diagram.loadingSlow': '圖表載入時間較長',
+  'diagram.reload': '重新整理重試',
+  'diagram.errorHelp': '可以重新整理頁面重試，或透過工具列查看和複製圖表原始碼。',
+  'diagram.errorHelpNoSource': '請重新整理頁面重試。',
 
   // ── Image Lightbox ──────────────────────────────────────────
   'image.zoomIn': '放大',
@@ -148,6 +179,10 @@ export const uiStrings = {
   'image.counter': '{current} / {total}',
   'image.hintDesktop': '雙擊放大 · 滾輪/雙指縮放',
   'image.hintMobile': '雙擊放大 · 雙指縮放',
+  'image.hintMobileGallery': '左右滑動切圖 · 雙指縮放 · 下滑關閉',
+  'image.preview': '圖片預覽',
+  'image.loadError': '圖片載入失敗',
+  'image.retry': '重試',
 
   // ── Media Controls ──────────────────────────────────────────
   'media.play': '播放',
@@ -187,6 +222,7 @@ export const uiStrings = {
   'pagination.page': '第 {page} 頁',
   'pagination.currentPage': '第 {page} 頁，當前頁',
   'pagination.of': '共 {total} 頁',
+  'pagination.label': '分頁',
 
   // ── Breadcrumb ──────────────────────────────────────────────
   'breadcrumb.home': '首頁',
@@ -235,10 +271,17 @@ export const uiStrings = {
   'settings.scrollProgress': '捲動進度條',
   'settings.christmas': '聖誕特效',
   'settings.bgmWidget': '背景音樂元件',
-  'settings.masterMotion': '減弱動畫',
   'settings.wave': '封面海浪',
   'settings.reset': '重置為預設',
-  'settings.waveDisabledByMasterMotion': '「減弱動畫」開啟時不可用',
+  'settings.motionLevel': '動效強度',
+  'settings.motionLevel.lively': '靈動',
+  'settings.motionLevel.livelyHint': '入場編排、滾動浮現與櫻花特效全開',
+  'settings.motionLevel.subtle': '克制',
+  'settings.motionLevel.subtleHint': '保留入場與過場，關閉正文浮現和櫻花特效',
+  'settings.motionLevel.reduced': '減弱',
+  'settings.motionLevel.reducedHint': '只保留必要的互動回饋',
+  'settings.motionLevel.systemReduced': '系統已開啟「減少動態效果」，將始終按「減弱」處理',
+  'settings.waveDisabledByReducedMotion': '動效強度為「減弱」時不可用',
   'settings.invalidNumber': '請輸入正數',
 
   // ── Announcement ────────────────────────────────────────────
@@ -311,11 +354,19 @@ export const uiStrings = {
   'series.rss': 'RSS 訂閱',
   'series.chromeExtension': 'Chrome 擴充功能',
   'series.docs': '文件',
+  'series.position': '第 {current} / {total} 篇',
+  'series.latestIssue': '最新一期',
+  'series.issues': '期',
+  'series.readIssue': '閱讀本期',
 
   // ── Home Info ───────────────────────────────────────────────
   'homeInfo.articles': '文章',
   'homeInfo.categories': '分類',
   'homeInfo.tags': '標籤',
+  'homeInfo.greetingMorning': '早上好呀',
+  'homeInfo.greetingAfternoon': '下午好呀',
+  'homeInfo.greetingEvening': '晚上好呀',
+  'homeInfo.greetingNight': '夜深了，早點休息',
 
   // ── Drawer ──────────────────────────────────────────────────
   'drawer.navMenu': '導覽選單',
@@ -346,6 +397,7 @@ export const uiStrings = {
   'toc.title': '文章目錄',
   'toc.expand': '展開目錄',
   'toc.empty': '暫無目錄',
+  'toc.sectionProgress': '本節閱讀進度',
 
   // ── Embed ─────────────────────────────────────────────────
   'embed.loadingTweet': '正在載入 Tweet',
@@ -355,6 +407,7 @@ export const uiStrings = {
 
   // ── Search Shortcut ───────────────────────────────────────
   'search.searchShortcut': '搜尋 ({shortcut})',
+  'search.loadError': '搜尋載入失敗，請重新整理頁面重試。',
 
   // ── Sider Segmented ─────────────────────────────────────────
   'sider.overview': '站點概覽',
@@ -363,6 +416,23 @@ export const uiStrings = {
 
   // ── Copy Link ───────────────────────────────────────────────
   'cover.copyLink': '複製連結',
+
+  // ── Post Markdown Actions ──────────────────────────────────
+  'post.markdown.copy': '複製 Markdown',
+  'post.markdown.copied': '已複製',
+  'post.markdown.download': '下載 .md',
+  'post.markdown.downloadedInstead': '無法寫入剪貼簿，已改為下載',
+  'post.markdown.failed': '取得 Markdown 失敗',
+  'post.markdown.more': '更多 Markdown 操作',
+  'post.markdown.openInEditor': '在寫作室打開',
+  'post.markdown.localEditors': '本地編輯器',
+
+  // ── Colophon (落款) ────────────────────────────────────────
+  'colophon.seal': '落款',
+  'colophon.filter': '按落款篩選',
+
+  // ── Viewer ─────────────────────────────────────────────────
+  'viewer.loadError': '查看器載入失敗，請重新整理頁面重試。',
 
   // ── Comment ────────────────────────────────────────────────
   'comment.prompt': '喜歡的話，留下你的評論吧～',
@@ -391,63 +461,64 @@ export const uiStrings = {
   // ── Moments ────────────────────────────────────────────────
   'nav.moments': '碎碎念',
   'moments.title': '碎碎念',
-  'moments.description': '记录频道中的日常消息',
-  'moments.channels': '碎碎念频道',
-  'moments.search': '搜索碎碎念',
-  'moments.searchForm': '搜索碎碎念内容',
-  'moments.searchQuery': '搜索关键词',
-  'moments.searchPlaceholder': '输入至少 3 个字符',
-  'moments.searchEmpty': '输入关键词，搜索所有公开频道的消息',
-  'moments.searchHint': '请输入至少 3 个 Unicode 字符',
-  'moments.searchTooLong': '搜索内容不能超过 200 个 Unicode 字符',
-  'moments.channel': '频道',
-  'moments.allChannels': '全部频道',
+  'moments.messageActions': '訊息操作',
+  'moments.description': '記錄頻道中的日常訊息',
+  'moments.channels': '碎碎念頻道',
+  'moments.search': '搜尋碎碎念',
+  'moments.searchForm': '搜尋碎碎念內容',
+  'moments.searchQuery': '搜尋關鍵字',
+  'moments.searchPlaceholder': '輸入至少 3 個字元',
+  'moments.searchEmpty': '輸入關鍵字，搜尋所有公開頻道的訊息',
+  'moments.searchHint': '請輸入至少 3 個 Unicode 字元',
+  'moments.searchTooLong': '搜尋內容不能超過 200 個 Unicode 字元',
+  'moments.channel': '頻道',
+  'moments.allChannels': '全部頻道',
   'moments.sort': '排序',
-  'moments.relevance': '相关度',
-  'moments.newest': '最新发布',
-  'moments.searchResults': '搜索结果',
-  'moments.noResults': '没有找到匹配的碎碎念',
-  'moments.clearSearch': '清除搜索条件',
+  'moments.relevance': '相關度',
+  'moments.newest': '最新發布',
+  'moments.searchResults': '搜尋結果',
+  'moments.noResults': '沒有找到符合的碎碎念',
+  'moments.clearSearch': '清除搜尋條件',
   'moments.updated': '已更新',
-  'moments.permalink': '永久链接',
-  'moments.copyLink': '复制链接',
-  'moments.copyFailed': '复制失败，请手动复制',
-  'moments.viewSource': '查看源消息',
+  'moments.permalink': '永久連結',
+  'moments.copyLink': '複製連結',
+  'moments.copyFailed': '複製失敗，請手動複製',
+  'moments.viewSource': '查看來源訊息',
   'moments.emptyMessage': '空消息',
-  'moments.mediaMessage': '媒体消息',
-  'moments.expand': '展开全文',
+  'moments.mediaMessage': '媒體訊息',
+  'moments.expand': '展開全文',
   'moments.collapse': '收起全文',
-  'moments.mediaProcessing': '媒体处理中',
-  'moments.mediaUnavailable': '媒体暂不可用',
-  'moments.image': '图片',
-  'moments.video': '视频',
-  'moments.audio': '音频',
+  'moments.mediaProcessing': '媒體處理中',
+  'moments.mediaUnavailable': '媒體暫不可用',
+  'moments.image': '圖片',
+  'moments.video': '影片',
+  'moments.audio': '音訊',
   'moments.document': '文件',
-  'moments.openDocument': '打开文件',
-  'moments.mediaMore': '另有 {count} 个媒体',
-  'moments.loadEarlier': '加载更早内容',
-  'moments.loadingEarlier': '正在加载更早内容',
-  'moments.loadedEarlier': '已加载更早内容',
-  'moments.allLoaded': '已加载全部内容',
-  'moments.loadEarlierFailed': '加载失败，请重试',
-  'moments.back': '返回上一页',
-  'moments.pagination': '碎碎念分页',
-  'moments.newer': '较新一条',
-  'moments.older': '较早一条',
-  'moments.contextNavigation': '相邻碎碎念',
-  'moments.tags': '标签',
-  'moments.emptyChannels': '暂无可见频道',
-  'moments.emptyChannel': '这个频道还没有消息',
-  'moments.notFound': '没有找到这条碎碎念',
-  'moments.notFoundDescription': '链接可能已失效，或内容不属于当前频道。',
-  'moments.rateLimited': '请求过于频繁',
-  'moments.rateLimitedDescription': '服务暂时限制了请求，请稍后重试。',
-  'moments.unavailable': '碎碎念暂时不可用',
-  'moments.unavailableDescription': '动态内容服务暂时无法连接，博客文章仍可正常浏览。',
-  'moments.retry': '重试',
+  'moments.openDocument': '開啟文件',
+  'moments.mediaMore': '另有 {count} 個媒體',
+  'moments.loadEarlier': '載入更早內容',
+  'moments.loadingEarlier': '正在載入更早內容',
+  'moments.loadedEarlier': '已載入更早內容',
+  'moments.allLoaded': '已載入全部內容',
+  'moments.loadEarlierFailed': '載入失敗，請重試',
+  'moments.back': '返回上一頁',
+  'moments.pagination': '碎碎念分頁',
+  'moments.newer': '較新一條',
+  'moments.older': '較早一條',
+  'moments.contextNavigation': '相鄰碎碎念',
+  'moments.tags': '標籤',
+  'moments.emptyChannels': '暫無可見頻道',
+  'moments.emptyChannel': '這個頻道還沒有訊息',
+  'moments.notFound': '沒有找到這則碎碎念',
+  'moments.notFoundDescription': '連結可能已失效，或內容不屬於目前頻道。',
+  'moments.rateLimited': '請求過於頻繁',
+  'moments.rateLimitedDescription': '服務暫時限制了請求，請稍後重試。',
+  'moments.unavailable': '碎碎念暫時不可用',
+  'moments.unavailableDescription': '動態內容服務暫時無法連線，博客文章仍可正常瀏覽。',
+  'moments.retry': '重試',
   'moments.backToIndex': '返回碎碎念',
-  'moments.cacheNotice': '内容可能有最多 5 分钟延迟',
-  'moments.rss': 'RSS 订阅',
-  'moments.globalRss': '订阅全部碎碎念',
-  'moments.channelRss': '订阅此频道',
+  'moments.cacheNotice': '內容可能有最多 5 分鐘延遲',
+  'moments.rss': 'RSS 訂閱',
+  'moments.globalRss': '訂閱全部碎碎念',
+  'moments.channelRss': '訂閱此頻道',
 } as const;

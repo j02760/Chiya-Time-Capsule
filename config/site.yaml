@@ -11,23 +11,23 @@
 # Site Basic Information
 # =============================================================================
 site:
-  title: 甘兔の桌面 # 網站名稱
-  alternate: chiya # 網站英文名稱 用於頁腳、Logo、@ handle 等
-  subtitle: 是什麼地方呢~ # 網站副標題
-  name: 白色毛球 # 作者名稱 - 請修改為你的名字
-  description: 放置個人日常瑣事的地方 # 網站描述
-  avatar: /img/avatar.webp # 網站頭像
-  showLogo: false # 是否顯示 Logo
-  author: 白色毛球 # 作者名稱 - 請修改為你的名字
-  url: https://chiya-koharu.vercel.app # 站點 URL 用於 RSS 和 SEO
-  defaultOgImage: /img/avatar.webp # 預設 Open Graph 圖片
+  title: 甘兔の桌面 # 网站名称
+  alternate: chiya # 网站英文名称 用于页脚、Logo、@ handle 等
+  subtitle: 是什麼地方呢~ # 网站副标题
+  name: 白色毛球 # 作者名称 - 请修改为你的名字
+  description: 放置個人日常瑣事的地方 # 网站描述
+  avatar: /img/avatar.webp # 网站头像
+  showLogo: false # 是否显示图形 Logo；默认显示站点名称，启用后可替换 src/assets/svg/logo.svg
+  author: 白色毛球 # 作者名称 - 请修改为你的名字
+  url: https://chiya-koharu.vercel.app # 站点 URL 用于 RSS 和 SEO
+  defaultOgImage: /img/avatar.webp # 默认 Open Graph 图片
   startYear: 2026.8 # 建站年份
-  timezone: Asia/Taipei # 時區配置 (IANA 格式)，用於日期顯示和處理
-  keywords: # SEO 關鍵字 (全局)
-  #  - 博客
-  #  - Astro
-  #  - 技术
-  #  - 前端
+  timezone: Asia/Taipei # 时区配置 (IANA 格式)，用于日期显示和处理
+  keywords: # SEO 关键词 (全局)
+    # - 博客
+    # - Astro
+    # - 技术
+    # - 前端
     # 请根据你的网站内容添加关键词
   breadcrumbHome: 首頁  # 面包屑导航中首页的显示名称（默认: '首页'）
   # icp:                         # ICP 备案号（可自定义链接）
@@ -39,7 +39,7 @@ site:
 
 # =============================================================================
 # Internationalization (i18n)
-# 國際化配置 - 控制多語言支援
+# 国际化配置 - 控制多语言支持
 # =============================================================================
 # defaultLocale: 默认语言代码（URL 不带前缀）
 # locales: 支持的语言列表
@@ -58,6 +58,7 @@ i18n:
       label: 日本語
     - code: zh-TW
       label: 繁體中文
+
 # =============================================================================
 # Category Map
 # Maps Chinese category names to URL-friendly English slugs
@@ -67,8 +68,8 @@ categoryMap:
   # Primary categories
   隨筆: life
   筆記: note
-  遊戲: games
   工具: tools
+  遊戲: games
   # 週刊: weekly
   # Secondary categories (for nested paths)
   # 前端: front-end
@@ -80,7 +81,7 @@ categoryMap:
 
 # =============================================================================
 # Featured Categories (Homepage)
-# 首頁精選分類 - 在首頁以卡片形式展示的分類入口
+# 首页精选分类 - 在首页以卡片形式展示的分类入口
 # =============================================================================
 # 字段说明：
 #   link: 分类链接路径，对应 categoryMap 中的英文 slug
@@ -89,26 +90,26 @@ categoryMap:
 #   description: 分类描述文字，显示在卡片上
 # -----------------------------------------------------------------------------
 featuredCategories:
-  - link: life # 對應 categoryMap 中 隨筆: life
+  - link: life # 对应 categoryMap 中 隨筆: life
     label: 隨筆
     image: /img/a0.webp
     description: 生活記錄、隨想隨筆
-  - link: note # 對應 categoryMap 中 筆記: note
+  - link: note # 对应 categoryMap 中 筆記: note
     label: 筆記
     image: /img/a1.webp
     description: 技術筆記、學習筆記
-  - link: games # 對應 categoryMap 中 遊戲: games
+  - link: games # 对应 categoryMap 中 遊戲: games
     label: 遊戲
     image: /img/a2.webp
     description: 遊戲相關
-  - link: tools # 對應 categoryMap 中 工具: tools
+  - link: tools # 对应 categoryMap 中 工具: tools
     label: 工具
     image: /img/a3.webp
     description: 工具使用、效率提升
 
 # =============================================================================
 # Featured Series
-# 精選系列功能 - 用於展示定期更新的系列內容（支援多個系列）
+# 精选系列功能 - 用于展示定期更新的系列内容（支持多个系列）
 # =============================================================================
 # 字段说明：
 #   slug: URL 路径（必填），如 'weekly' 对应 /weekly 路径
@@ -125,16 +126,16 @@ featuredCategories:
 # -----------------------------------------------------------------------------
 featuredSeries:
   - slug: weekly # URL 路径: /weekly
-    categoryName: 週刊 # 必须与 categoryMap 中的分类名匹配
-    label: 我的週刊 # 简短名称
-    fullName: 我的技术週刊 #ㄋ 完整名称
-    description: | # 支援多行 Markdown
-      這是週刊/系列文章功能的示例配置。
-      你可以用它來發布定期更新的系列內容，如技術週刊、讀書筆記系列等。
-      設定 enabled: false 可關閉此功能。
-    cover: /img/weekly_header.webp # 系列頁面頭圖
-    enabled: false # 啟用此系列
-    icon: ri:newspaper-line # 導航圖標
+    categoryName: 周刊 # 必须与 categoryMap 中的分类名匹配
+    label: 我的周刊 # 简短名称
+    fullName: 我的技术周刊 # 完整名称
+    description: | # 支持多行 Markdown
+      这是周刊/系列文章功能的示例配置。
+      你可以用它来发布定期更新的系列内容，如技术周刊、读书笔记系列等。
+      设置 enabled: false 可以关闭此功能。
+    cover: /img/weekly_header.webp # 系列页面头图
+    enabled: false # 启用此系列
+    icon: ri:newspaper-line # 导航图标
     links: # 相关链接（可选）
       github: https://github.com/your-username/your-repo # (可选) GitHub 仓库
       rss: /rss.xml # (可选) RSS 订阅链接
@@ -152,7 +153,7 @@ featuredSeries:
 
 # =============================================================================
 # Social Links
-# 社交連結 - 顯示在頁腳和個人資訊區域
+# 社交链接 - 显示在页脚和个人信息区域
 # =============================================================================
 # 字段说明：
 #   url: 链接地址（邮箱需加 mailto: 前缀）
@@ -164,9 +165,9 @@ featuredSeries:
 # -----------------------------------------------------------------------------
 social:
   github:
-    url: https://github.com/j02760 # 替換為你的 GitHub 連結
-    icon: ri:github-fill # Remix Icon 的 GitHub 圖標
-    color: '#191717' # (可選) 圖標顏色
+    url: https://github.com/j02760 # 替换为你的 GitHub 链接
+    icon: ri:github-fill # Remix Icon 的 GitHub 图标
+    color: '#191717' # (可选) 图标颜色
   email:
     url: mailto:ws9830406@gmail.com # 替换为你的邮箱，需加 mailto: 前缀
     icon: ri:mail-line
@@ -197,7 +198,7 @@ social:
 
 # =============================================================================
 # Friends Links
-# 友鏈頁面配置 - 展示友鏈列表和申請說明
+# 友情链接页面配置 - 展示友链列表和申请说明
 # =============================================================================
 # intro: 页面介绍文字配置
 #   title: 页面标题
@@ -211,7 +212,12 @@ social:
 #   - owner: 站长昵称
 #   - desc: 站点描述/简介
 #   - image: 头像图片 URL
-#   - color: (可选) 卡片背景色，十六进制格式
+#   - color: (可选) 主题色，十六进制格式；显示在头像外圈和悬停效果上
+#   - group: (可选) 所属分组的 id；未填写或找不到分组时归入「未分组」
+# groups: (可选) 友链分组，按配置顺序展示；不配置则为平铺列表
+#   - id: 分组标识，供友链的 group 引用（唯一）
+#   - title: 分组标题
+#   - description: (可选) 分组说明
 # -----------------------------------------------------------------------------
 friends:
   intro:
@@ -239,22 +245,10 @@ friends:
     #   desc: 一个热爱技术的开发者
     #   image: https://api.dicebear.com/7.x/avataaars/svg?seed=Alice
     #   color: '#BEDCFF'
-    # - site: 示例博客 B
-    #   url: https://example-b.com
-    #   owner: Bob
-    #   desc: 分享生活与技术的小站
-    #   image: https://api.dicebear.com/7.x/avataaars/svg?seed=Bob
-    #   color: '#FBC1CC'
-    # - site: 示例博客 C
-    #   url: https://example-c.com
-    #   owner: Carol
-    #   desc: 记录学习与成长的地方
-    #   image: https://api.dicebear.com/7.x/avataaars/svg?seed=Carol
-    #   color: '#ABDCFF'
 
 # =============================================================================
 # Announcements
-# 公告系統 - 在頁面頂部顯示重要通知
+# 公告系统 - 在页面顶部显示重要通知
 # =============================================================================
 # 字段说明：
 #   id: 唯一标识符，用于记录用户已读状态（localStorage）
@@ -304,7 +298,7 @@ announcements:
 
 # =============================================================================
 # Default Cover List
-# 預設封面列表 - 文章沒有指定封面時將隨機從列表中選擇一張作為封面
+# 默认封面列表 - 文章没有指定封面时将随机从列表中选择一张作为封面
 # 不设置则使用内置的 21 张默认封面 (/img/cover/1~21.webp)
 # =============================================================================
 # defaultCoverList:
@@ -314,7 +308,7 @@ announcements:
 
 # =============================================================================
 # Content Processing Options
-# 內容處理選項 - 控制文章渲染和互動行為
+# 内容处理选项 - 控制文章渲染和交互行为
 # =============================================================================
 # 字段说明：
 #   addBlankTarget: 外部链接在新窗口打开
@@ -331,19 +325,19 @@ announcements:
 #   postCardImagePosition: 文章卡片封面图位置 (alternating/left/right)
 # -----------------------------------------------------------------------------
 content:
-  addBlankTarget: true # 外部連結新視窗開啟
-  smoothScroll: true # 平滑捲動
-  addHeadingLevel: true # 標題錨點
-  enhanceCodeBlock: true # 增強程式碼區塊
-  enableCodeCopy: true # 程式碼複製按鈕
-  enableCodeFullscreen: true # 程式碼全螢幕按鈕
-  enableLinkEmbed: true # 連結卡片預覽
+  addBlankTarget: true # 外部链接新窗口打开
+  smoothScroll: true # 平滑滚动
+  addHeadingLevel: true # 标题锚点
+  enhanceCodeBlock: true # 增强代码块
+  enableCodeCopy: true # 代码复制按钮
+  enableCodeFullscreen: true # 代码全屏按钮
+  enableLinkEmbed: true # 链接卡片预览
   enableCodePenEmbed: true # CodePen 嵌入
   enableTweetEmbed: true # 推文嵌入
-  enableOGPreview: true # OG 預覽卡片
-  previewCacheTime: 30 # 預覽快取時間(天)
-  lazyLoadEmbeds: true # 延遲載入嵌入內容
-  postCardImagePosition: alternating # 文章卡片封面圖位置在首頁的顯示控制 alternating 預設交替顯示 left 封面圖始終在左側 right 封面圖始終在右側
+  enableOGPreview: true # OG 预览卡片
+  previewCacheTime: 30 # 预览缓存时间(天)
+  lazyLoadEmbeds: true # 延迟加载嵌入
+  postCardImagePosition: alternating # 文章卡片封面图位置在首页的显示控制 alternating 默认交替显示 left 封面图始终在左侧 right 封面图始终在右侧
   # Shoka 兼容功能（默认全部启用，设为 false 可关闭）
   enableShokaContainers: true   # :::提醒块 ;;;标签卡 +++折叠块
   enableShokaAttrs: true        # [text]{.class} 属性语法
@@ -357,14 +351,32 @@ content:
   enableEncryptedBlock: true    # :::encrypted{password="..."} 加密内容块
 
 # =============================================================================
+# Motion
+# 动效配置 - 站点默认动效强度与樱花特效
+# =============================================================================
+# 字段说明：
+#   level: 访客未手动选择时的默认动效强度，访客可在右下角「设置 → 通用 → 动效强度」中覆盖
+#     lively  灵动：页面入场编排、滚动浮现（含正文）、共享元素过渡、樱花特效
+#     subtle  克制：保留入场与过渡，正文不做滚动浮现，不播放樱花特效
+#     reduced 减弱：关闭装饰性动效，只保留必要的交互反馈
+#   heroPetals: 头图樱花飘落（仅 lively 档生效）
+#   clickBurst: 点击按钮、链接等可交互元素时迸出花瓣（仅 lively 档生效）
+# 系统开启「减少动态效果」(prefers-reduced-motion) 时，始终按 reduced 处理
+# -----------------------------------------------------------------------------
+motion:
+  level: lively
+  heroPetals: true
+  clickBurst: true
+
+# =============================================================================
 # Moments Archive (optional)
 # 碎碎念动态归档 - 默认关闭；启用时还需配置 KOHARU_SUITE_URL 和 dynamic Docker target
 # =============================================================================
 moments:
   enabled: false
-  path: moments # 支援嵌套路徑，例如 life/moments；不要添加首尾斜線
+  path: moments # 支持嵌套路径，例如 life/moments；不要添加首尾斜线
   title: 碎碎念
-  description: 記錄頻道中的日常訊息
+  description: 记录频道中的日常消息
   # ogImage: /img/moments-og.png
   # pathAliases:
   #   - telegram
@@ -377,6 +389,119 @@ moments:
   #     ogImage: /img/daily-og.png
   #     aliases:
   #       - old-daily
+
+# =============================================================================
+# Writing Room
+# 写作室 - 默认关闭，开启后生成 /editor/ 和 /editor/preview/，并显示已有导航入口
+# 使用本地 CMS 编辑文章时也需要开启；修改后重启开发服务器或重新构建
+# =============================================================================
+editor:
+  enabled: true
+
+# =============================================================================
+# Colophon (落款)
+# 文章落款 - 为文章标注创作方式、阅读提示等，字典在这里定义，文章 frontmatter 引用
+# =============================================================================
+# 用法（文章 frontmatter）：
+#   colophon: [ai-cowrite, spoiler]
+#   colophon:
+#     - ai-cowrite
+#     - { id: spoiler, note: 含《我推的孩子》第二季剧透 }   # note：本篇自己的补充说明
+#     - { icon: fa6-solid:cat, label: 猫猫审阅过 }          # 一次性标记，不进字典
+# 字段说明：
+#   groups.<id>.label: 分组名称（显示在文末落款）
+#   groups.<id>.exclusive: 是否互斥，互斥组一篇文章只能选一个（默认 false）
+#   groups.<id>.placement / marks.<id>.placement: 显示位置，可多选（标记优先，其次分组，默认 [meta, seal]）
+#     meta   封面信息行（字数、阅读时长旁）
+#     banner 正文前的提示条
+#     seal   文末落款
+#     card   文章列表卡片上的小图标
+#   marks.<id>.icon: Iconify 图标，限 ri / fa6-solid / fa6-regular / gg 四套（见 src/lib/config/icon-sets.ts）
+#   marks.<id>.tone: muted（默认）| accent | warn
+#   defaults: 默认标记，文章没有该组的标记时自动补上（每组最多一个）；文章写 colophon: [] 可不显示任何标记
+# 多语言：在 config/i18n-content.yaml 的 <locale>.colophon 下覆盖 groups / marks 文案
+# 删除整个 colophon 段落即可关闭此功能
+# -----------------------------------------------------------------------------
+colophon:
+  enabled: true
+  defaults: [handwritten] # 没写执笔的文章默认显示「手写」
+  groups:
+    authorship:
+      label: 执笔
+      exclusive: true
+      placement: [meta, seal, card]
+    notice:
+      label: 阅读提示
+      placement: [meta, banner]
+    # ai:
+    #   label: AI 参与
+    #   placement: [seal]
+    # art:
+    #   label: 图像
+    #   placement: [seal]
+    # status:
+    #   label: 文章状态
+    #   placement: [meta, seal]
+    # mood:
+    #   label: 写作时
+    #   placement: [seal]
+  marks:
+    handwritten:
+      group: authorship
+      icon: ri:quill-pen-line
+      label: 手写
+      description: 每个字都是我自己敲的。
+    ai-cowrite:
+      group: authorship
+      icon: ri:sparkling-2-line
+      label: 与 AI 合写
+      description: 我主笔，AI 帮我理思路、换说法。
+    ai-lead:
+      group: authorship
+      icon: ri:sparkling-2-fill
+      label: AI 主笔
+      description: 正文主要由 AI 起草，我负责挑选和改写。
+    spoiler:
+      group: notice
+      icon: ri:eye-off-line
+      label: 含剧透
+      description: 涉及作品后续剧情，还没看完的话可以先收藏。
+      tone: warn
+    outdated:
+      group: notice
+      icon: ri:hourglass-line
+      label: 可能已过时
+      description: 写得比较早，文中的版本和做法可能已经变了。
+      tone: warn
+    # ai-idea: { group: ai, icon: ri:lightbulb-flash-line, label: 构思, description: 和 AI 聊过选题与结构。 }
+    # ai-polish: { group: ai, icon: ri:magic-line, label: 润色, description: AI 帮忙改过措辞和错字。 }
+    # ai-code: { group: ai, icon: ri:code-s-slash-line, label: 代码, description: 示例代码有 AI 参与编写。 }
+    # ai-translate: { group: ai, icon: ri:translate-2, label: 翻译, description: 译文由 AI 初译，我校对过。 }
+    # self-drawn: { group: art, icon: ri:brush-line, label: 自己画的, description: 文中插图是我自己画的。 }
+    # photo: { group: art, icon: ri:camera-3-line, label: 自己拍的, description: 照片都是我自己拍的。 }
+    # ai-art: { group: art, icon: ri:image-ai-line, label: AI 配图, description: 文中有 AI 生成或协作绘制的图。 }
+    # ongoing: { group: status, icon: ri:refresh-line, label: 持续更新, description: 这篇会不定期补充。 }
+    # wip: { group: status, icon: ri:seedling-line, label: 未完待续, description: 坑还没填完，后面会接着写。 }
+    # late-night: { group: mood, icon: ri:moon-clear-line, label: 深夜写的 }
+    # one-sitting: { group: mood, icon: ri:cup-line, label: 一口气写完 }
+
+# =============================================================================
+# Post Actions
+# 文章操作 - 面包屑右侧的「复制 Markdown」按钮组
+# =============================================================================
+# 字段说明：
+#   copyMarkdown: 复制全文 Markdown（含 frontmatter）
+#   downloadMarkdown: 下载 .md 文件
+#   openInEditor: 在写作室打开，需要 editor.enabled
+#     off      不显示
+#     dev      仅本地开发服务器显示
+#     everyone 所有访客可见，访客打开的是一份浏览器草稿副本，不会改动博客
+# 加密文章（password）不提供原文，也不显示这些按钮
+# -----------------------------------------------------------------------------
+postActions:
+  copyMarkdown: true
+  downloadMarkdown: true
+  openInEditor: everyone
 
 # =============================================================================
 # Navigation Routes
@@ -621,7 +746,7 @@ seo:
     # policy:                          # 爬虫策略（可选，取消注释并配置）
     #   - userAgent: '*'
     #     allow: '/'
-        disallow: '*'
+    #     disallow:
     #       - '/api/'
     # host: true                       # 可选：添加 Host 指令（Yandex）
 

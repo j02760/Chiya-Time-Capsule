@@ -1,5 +1,6 @@
 ---
 // 导入所需的库和类型
+import ResponsiveImage from '@components/common/ResponsiveImage.astro';
 import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { ScrollableRow } from '@components/ui/ScrollableRow';
@@ -8,6 +9,7 @@ import { createArticleStatsConfig, defaultCoverList } from '@constants/site-conf
 import { buildCategoryPath, buildTagPath, getCategoryArr, translateCategoryName } from '@lib/content';
 import { displayDate } from '@lib/date';
 import { getLqipProps } from '@lib/lqip';
+import { postTitleMorphName } from '@lib/morph-transitions';
 import { routeBuilder } from '@lib/route';
 import { cn } from '@lib/utils';
 import { Icon } from 'astro-icon/components';
@@ -19,26 +21,13 @@ export interface PostItemCardProps {
   data: PostCardData;
   leftClip?: boolean;
   randomCover: string;
-  showTags?: boolean;
-  hideCover?: boolean; // 隐藏图片，让内容铺满
-  isSimple?: boolean; // 是否简单模式
   isUniformPosition?: boolean; // 是否统一图片位置（非交替模式）
 }
 
-const {
-  randomCover,
-  data,
-  leftClip = true,
-  hideCover: hideCoverProp,
-  showTags: showTagsProp,
-  isSimple = false,
-  isUniformPosition = false,
-} = Astro.props as PostItemCardProps;
+const { randomCover, data, leftClip = true, isUniformPosition = false } = Astro.props as PostItemCardProps;
 
-const showTags = showTagsProp ?? !isSimple;
-const hideCover = hideCoverProp ?? isSimple;
-
-const { cover, date, categories, title, draft, description, slug, link, tags, wordCount, readingTime, postLocale } = data ?? {};
+const { cover, date, categories, title, draft, description, slug, link, tags, wordCount, readingTime, postLocale, cardMarks } =
+  data ?? {};
 
 const locale = getLocaleFromUrl(Astro.url.pathname);
 const finalCover = cover ?? randomCover ?? defaultCoverList[0];
@@ -67,55 +56,48 @@ const staggerAmounts = ['pl-0', 'pl-2', 'pl-4', 'pl-6'] as const;
  */
 function getStaggerPadding(rowIndex: number): string {
   // Only apply stagger for left image position (diagonal faces content)
-  if (!isUniformPosition || hideCover || !leftClip) return '';
+  if (!isUniformPosition || !leftClip) return '';
   return staggerAmounts[rowIndex];
 }
 
 const pageStatsConfig = createArticleStatsConfig(href);
+const titleMorph = postTitleMorphName(slug);
 ---
 
 <div
   class={cn(
-    'hover:shadow-card-darker group text-card-foreground shadow-card relative flex rounded-lg bg-white transition-shadow md:flex-col dark:bg-transparent',
-    'post-item-card',
+    'group text-card-foreground shadow-card relative flex rounded-lg bg-white md:flex-col dark:bg-card dark:ring-1 dark:ring-white/5',
+    'post-item-card motion-reveal',
   )}
 >
-  {
-    !hideCover && (
-      <a
-        aria-label="post-link"
-        href={href}
-        style={lqipProps.style}
-        class={cn(
-          'md:clip-path-none relative h-46.5 max-h-46.5 w-[calc(50%-2rem)] overflow-hidden md:w-auto',
-          leftClip ? 'rounded-s-lg clip-path-post-img-left order-1' : 'rounded-e-lg clip-path-post-img-right order-2',
-          'md:clip-path-none md:order-0',
-          lqipProps.class,
-        )}
-      >
-        <img
-          src={finalCover}
-          loading="lazy"
-          alt="post cover"
-          class="h-full w-full cursor-pointer object-cover transition duration-500 group-hover:scale-110 group-hover:rotate-3"
-        />
-      </a>
-    )
-  }
+  <a
+    href={href}
+    tabindex="-1"
+    aria-hidden="true"
+    style={lqipProps.style}
+    class={cn(
+      'post-item-cover md:clip-path-none relative h-46.5 max-h-46.5 w-[calc(50%-2rem)] overflow-hidden md:w-auto',
+      leftClip ? 'rounded-s-lg clip-path-post-img-left order-1' : 'rounded-e-lg clip-path-post-img-right order-2',
+      'md:clip-path-none md:order-0',
+      lqipProps.class,
+    )}
+  >
+    <ResponsiveImage src={finalCover} maxWidth={800} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 992px) 40vw, 400px" loading="lazy" decoding="async" alt="" class="h-full w-full cursor-pointer object-cover" />
+  </a>
   <div
     class={cn(
       'flex flex-col gap-2 pb-2 md:pb-4 pt-4 md:pt-1',
       'px-4 md:px-4',
       // Reduce margin on the side adjacent to image diagonal when uniform left position
-      isUniformPosition && !hideCover && leftClip && '-ml-3',
-      hideCover ? 'w-full' : 'w-[calc(50%+2rem)] md:w-full',
-      !hideCover && (leftClip ? 'order-2' : 'order-1'),
+      isUniformPosition && leftClip && '-ml-3',
+      'w-[calc(50%+2rem)] md:w-full',
+      leftClip ? 'order-2' : 'order-1',
       'md:order-0',
     )}
   >
     <ScrollableRow
       client:visible
-      className={cn('w-full', { 'order-2 pb-3 md:pb-0': isSimple }, getStaggerPadding(0), 'md:pl-0 md:pr-0')}
+      className={cn('w-full', getStaggerPadding(0), 'md:pl-0 md:pr-0')}
       innerClassName="items-center justify-between gap-4 w-full"
       fadeWidth={20}
     >
@@ -134,6 +116,17 @@ const pageStatsConfig = createArticleStatsConfig(href);
               <Icon name="fa6-solid:calendar-days" />
               {displayDate.date(date)}
             </p>
+          ) : null
+        }
+        {
+          cardMarks?.length ? (
+            <span class="flex-center gap-1.5">
+              {cardMarks.map((mark) => (
+                <span class="inline-flex" role="img" title={mark.label} aria-label={mark.label}>
+                  <Icon name={mark.icon} class="size-3.5" aria-hidden="true" />
+                </span>
+              ))}
+            </span>
           ) : null
         }
         <p class="flex-center gap-1 whitespace-nowrap">
@@ -161,8 +154,13 @@ const pageStatsConfig = createArticleStatsConfig(href);
     </ScrollableRow>
     <div class={cn('mt-1 flex flex-col space-y-1.5 p-0', getStaggerPadding(1), 'md:pl-0 md:pr-0')}>
       <div class="flex items-center gap-2">
-        <a href={href} aria-label="post-link" class="min-w-0 flex-1"
-          ><h2 class="text-primary hover:text-blue line-clamp-1 truncate text-xl font-bold transition-colors duration-300">
+        <a href={href} class="min-w-0 flex-1 outline-none">
+          <h2
+            class="text-primary hover:text-blue line-clamp-1 w-fit max-w-full truncate text-xl font-bold transition-colors duration-300"
+            transition:name={titleMorph}
+            transition:animate="initial"
+            data-morph={titleMorph}
+          >
             {title}
           </h2>
         </a>
@@ -187,7 +185,6 @@ const pageStatsConfig = createArticleStatsConfig(href);
     <p
       class={cn(
         'text-muted-foreground line-clamp-3 h-15 text-sm md:h-auto md:max-h-15',
-        { 'line-clamp-2 h-10 md:max-h-10': isSimple },
         getStaggerPadding(2),
         'md:pl-0 md:pr-0',
       )}
@@ -195,7 +192,7 @@ const pageStatsConfig = createArticleStatsConfig(href);
       {postDescription}
     </p>
     {
-      showTags && tags?.length && (
+      tags?.length && (
         <ScrollableRow
           client:visible
           className={cn(
@@ -223,18 +220,18 @@ const pageStatsConfig = createArticleStatsConfig(href);
     }
     <a
       href={href}
-      aria-label="more info"
-      class={cn('absolute -bottom-1', hideCover ? '-right-1' : leftClip ? '-right-1' : '-left-1', 'md:left-auto md:-right-1')}
+      tabindex="-1"
+      aria-hidden="true"
+      class={cn('absolute -bottom-1', leftClip ? '-right-1' : '-left-1', 'md:left-auto md:-right-1')}
     >
       <Button
+        tabIndex={-1}
         className={cn(
-          'bg-gradient-shoka-button rounded-2xl transition-all hover:translate-y-1 hover:scale-105 md:h-7 md:px-2 md:py-1 md:text-xs',
-          hideCover
-            ? 'rounded-se-none rounded-es-none hover:translate-x-1'
-            : leftClip
-              ? 'rounded-se-none rounded-es-none hover:translate-x-1'
-              : 'rounded-ss-none rounded-ee-none hover:-translate-x-1',
-          'md:rounded-ss-2xl md:rounded-se-none md:rounded-ee-2xl md:rounded-es-none md:hover:translate-x-1',
+          'post-item-more bg-gradient-shoka-button rounded-2xl transition-[translate,box-shadow] duration-500 ease-out-expo md:h-7 md:px-2 md:py-1 md:text-xs',
+          leftClip
+            ? 'rounded-se-none rounded-es-none group-hover:translate-x-1'
+            : 'rounded-ss-none rounded-ee-none group-hover:-translate-x-1',
+          'md:rounded-ss-2xl md:rounded-se-none md:rounded-ee-2xl md:rounded-es-none md:group-hover:translate-x-1',
         )}
       >
         more...
@@ -244,6 +241,74 @@ const pageStatsConfig = createArticleStatsConfig(href);
 </div>
 
 <style>
+  .post-item-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 220px;
+    transition:
+      transform var(--dur-slow) var(--ease-out-quart),
+      box-shadow var(--dur-slow) var(--ease-out-quart);
+  }
+
+  .post-item-card:has(a:focus-visible) {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 3px;
+  }
+
+  .post-item-cover {
+    transition: clip-path 900ms var(--ease-out-expo);
+  }
+
+  .post-item-cover img {
+    transition:
+      scale 900ms var(--ease-out-expo),
+      filter 900ms var(--ease-out-expo);
+  }
+
+  @media (hover: hover) {
+    .post-item-card:hover {
+      transform: translateY(-0.25rem);
+      box-shadow:
+        0 1.25rem 2.5rem -1.25rem rgb(233 84 107 / 0.4),
+        0 0.5rem 1.25rem -0.75rem rgb(90 97 105 / 0.22);
+    }
+
+    :global(.dark) .post-item-card:hover {
+      box-shadow:
+        0 1.25rem 2.75rem -1.25rem rgb(240 123 145 / 0.32),
+        0 0.5rem 1.5rem -0.75rem rgb(0 0 0 / 0.5);
+    }
+
+    .post-item-card:hover .post-item-cover img {
+      scale: 1.06;
+      filter: saturate(1.08);
+    }
+
+    .post-item-card:hover .post-item-more {
+      box-shadow: 0 0.4rem 1.1rem -0.3rem rgb(233 84 107 / 0.6);
+    }
+  }
+
+  /* The diagonal edge opens a little on hover (desktop layout only; mobile stacks the cover). */
+  @media (hover: hover) and (width > 768px) {
+    .post-item-card:hover .clip-path-post-img-left {
+      clip-path: polygon(0 0, 95% 0%, 100% 100%, 0% 100%);
+    }
+
+    .post-item-card:hover .clip-path-post-img-right {
+      clip-path: polygon(0 0%, 100% 0%, 100% 100%, 5% 100%);
+    }
+  }
+
+  :global(html.motion-off) .post-item-card:hover {
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-item-card:hover {
+      transform: none;
+    }
+  }
+
   /* 圣诞特效开启时的卡片样式 */
   :global(html.christmas) .post-item-card {
     position: relative;

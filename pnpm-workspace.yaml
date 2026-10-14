@@ -1,2 +1,7 @@
 packages:
   - '.'
+  - 'cms'
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

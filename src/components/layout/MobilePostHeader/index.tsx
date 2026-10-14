@@ -8,12 +8,15 @@
 import { LazyMotionProvider } from '@components/common/LazyMotionProvider';
 import { TocProvider } from '@components/layout/TableOfContents/TocContext';
 import { animation } from '@constants/design-tokens';
-import { useMediaQuery } from '@hooks/index';
-import { useCurrentHeading } from '@hooks/useCurrentHeading';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useMotionLevel } from '@hooks/useMotionLevel';
 import { useTocController } from '@hooks/useTocController';
 import { useTranslation } from '@hooks/useTranslation';
-import { AnimatePresence, m, useReducedMotion } from 'motion/react';
+import { chapterIndexOf, findHeadingById, flattenHeadings } from '@lib/toc';
+import { m } from 'motion/react';
+import { useMemo, useState } from 'react';
 import { siteConfig } from '@/constants/site-config';
+import { localizedPath } from '@/i18n';
 import { HeadingTitle } from './HeadingTitle';
 import { MobileTOCDropdown } from './MobileTOCDropdown';
 import { ProgressCircle } from './ProgressCircle';
@@ -29,16 +32,23 @@ interface MobilePostHeaderProps {
   logoSrc?: string;
   /** Whether to enable CSS counter numbering in TOC (default: true) */
   enableNumbering?: boolean;
+  /** Page locale from the server, so the SSR'd logo link matches hydration */
+  locale?: string;
 }
 
 // Scroll offset for detecting active heading
 const SCROLL_OFFSET_TOP = 80;
 
-function Logo({ logoElement, logoText, logoSrc }: Pick<MobilePostHeaderProps, 'logoElement' | 'logoText' | 'logoSrc'>) {
+function Logo({
+  logoElement,
+  logoText,
+  logoSrc,
+  locale,
+}: Pick<MobilePostHeaderProps, 'logoElement' | 'logoText' | 'logoSrc' | 'locale'>) {
   return (
-    <a href="/" className="flex items-center gap-1">
+    <a href={localizedPath('/', locale)} className="flex items-center gap-1">
       {logoElement === 'svg' && logoSrc ? (
-        <img src={logoSrc} alt={siteConfig?.alternate ?? siteConfig?.name} className="h-8" height={32} />
+        <img src={logoSrc} alt={siteConfig?.alternate ?? siteConfig?.name} className="h-8 w-auto" width={448} height={153} />
       ) : (
         <span className="logo-text">{logoText}</span>
       )}
@@ -52,74 +62,95 @@ export function MobilePostHeader({
   logoText,
   logoSrc,
   enableNumbering = true,
+  locale,
 }: MobilePostHeaderProps) {
-  const { t } = useTranslation();
-  const shouldReduceMotion = useReducedMotion();
+  const { t } = useTranslation(locale);
+  const shouldReduceMotion = useMotionLevel() === 'reduced';
 
   // Check if we're on mobile (tablet breakpoint: max-width 992px)
   const isMobile = useMediaQuery('(max-width: 992px)');
 
-  // Get current H2/H3 heading for title display
-  const currentHeading = useCurrentHeading({ offsetTop: SCROLL_OFFSET_TOP });
-
-  // Heading tree + accordion state for the TOC dropdown
-  const { headings, toc } = useTocController({ offsetTop: SCROLL_OFFSET_TOP + 40 });
+  // The header title and dropdown follow the same reading position.
+  const { headings, toc, subscribeFrame } = useTocController({
+    offsetTop: SCROLL_OFFSET_TOP + 40,
+    enabled: isMobile && isPostPage,
+  });
+  const currentHeading = findHeadingById(headings, toc.activeId);
 
   // Determine if we should show heading mode
   const showHeadingMode = isPostPage && isMobile && headings.length > 0 && currentHeading !== null;
 
+  // Which way the reader travelled to the current heading, so its title rolls in from that side
+  const order = useMemo(() => flattenHeadings(headings).map((heading) => heading.id), [headings]);
+  const [travel, setTravel] = useState<{ id: string; direction: 1 | -1 }>({ id: '', direction: 1 });
+  if (currentHeading && currentHeading.id !== travel.id) {
+    const from = order.indexOf(travel.id);
+    setTravel({ id: currentHeading.id, direction: from === -1 || order.indexOf(currentHeading.id) >= from ? 1 : -1 });
+  }
+  const chapter = currentHeading ? chapterIndexOf(headings, currentHeading.id) : 0;
+
   // If not mobile or not a post page, always show logo
   if (!isMobile) {
-    return <Logo logoElement={logoElement} logoText={logoText} logoSrc={logoSrc} />;
+    // Keep motion features ready when a breakpoint change enables reading tracking.
+    return (
+      <LazyMotionProvider>
+        <Logo logoElement={logoElement} logoText={logoText} logoSrc={logoSrc} locale={locale} />
+      </LazyMotionProvider>
+    );
   }
 
   return (
     <LazyMotionProvider>
       <div className="flex items-center gap-2">
-        <AnimatePresence mode="wait">
-          {showHeadingMode ? (
-            <m.div
-              key="heading-mode"
-              className="flex items-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : animation.spring.gentle}
-            >
-              <TocProvider value={toc}>
-                <MobileTOCDropdown
-                  headings={headings}
-                  enableNumbering={enableNumbering}
-                  trigger={
-                    <button
-                      type="button"
-                      className="flex w-[calc(100vw-12rem)] items-center gap-2.5 rounded-full bg-foreground/10 py-1 pr-3 pl-1.5 backdrop-blur-sm transition-colors hover:bg-foreground/20"
-                      aria-label={t('toc.expand')}
-                    >
-                      {/* Progress circle - fixed size container */}
-                      <div className="relative shrink-0">
-                        <ProgressCircle size={32} strokeWidth={2.5} />
-                      </div>
-                      <div className="overflow-hidden">
-                        <HeadingTitle heading={currentHeading} />
-                      </div>
-                    </button>
-                  }
-                />
-              </TocProvider>
-            </m.div>
-          ) : (
-            <m.div
-              key="logo-mode"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : animation.spring.gentle}
-            >
-              <Logo logoElement={logoElement} logoText={logoText} logoSrc={logoSrc} />
-            </m.div>
-          )}
-        </AnimatePresence>
+        {showHeadingMode ? (
+          <m.div
+            key="heading-mode"
+            className="flex items-center"
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={shouldReduceMotion ? { duration: 0 } : animation.spring.gentle}
+          >
+            <TocProvider value={toc}>
+              <MobileTOCDropdown
+                headings={headings}
+                subscribeFrame={subscribeFrame}
+                enableNumbering={enableNumbering}
+                trigger={
+                  <button
+                    type="button"
+                    className="flex w-[calc(100vw-14rem)] items-center gap-2.5 rounded-full bg-foreground/10 py-1 pr-3 pl-1.5 backdrop-blur-sm transition-colors hover:bg-foreground/20"
+                    aria-label={t('toc.expand')}
+                  >
+                    {/* Progress circle - fixed size container, with the current chapter number inside */}
+                    <div className="relative shrink-0">
+                      <ProgressCircle size={32} strokeWidth={2.5} />
+                      {enableNumbering && chapter > 0 && (
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-0 flex-center font-semibold text-[0.625rem] text-primary tabular-nums"
+                        >
+                          {chapter}
+                        </span>
+                      )}
+                    </div>
+                    <div className="overflow-hidden">
+                      <HeadingTitle heading={currentHeading} direction={travel.direction} />
+                    </div>
+                  </button>
+                }
+              />
+            </TocProvider>
+          </m.div>
+        ) : (
+          <m.div
+            key="logo-mode"
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={shouldReduceMotion ? { duration: 0 } : animation.spring.gentle}
+          >
+            <Logo logoElement={logoElement} logoText={logoText} logoSrc={logoSrc} locale={locale} />
+          </m.div>
+        )}
       </div>
     </LazyMotionProvider>
   );

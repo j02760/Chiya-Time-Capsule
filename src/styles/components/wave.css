@@ -1,6 +1,6 @@
 .wave-wrap {
   width: 100%;
-  height: 15dvh;
+  height: 15svh;
   min-height: 3.125rem;
   max-height: 9.375rem;
   position: absolute;
@@ -124,7 +124,8 @@ html.motion-off .wave .parallax > use {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wave .parallax > use {
+  /* Matches the .wave-wrap-nested source rule's specificity and comes later, so it wins. */
+  .wave-wrap .wave .parallax > use {
     animation: none;
   }
 }
